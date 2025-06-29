@@ -8,7 +8,6 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-const cors = require('cors');
 app.use(cors({
     origin: [
         'https://lovely-unicorn-14a79e.netlify.app/', // your Netlify site
