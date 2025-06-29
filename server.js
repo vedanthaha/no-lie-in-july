@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const cors = require('cors');
 app.use(cors({
     origin: [
-        'https://lovely-unicorn-14a79e.netlify.app', // your Netlify site
+        'https://lovely-unicorn-14a79e.netlify.app/', // your Netlify site
         'http://localhost:3000' // for local testing
     ],
     credentials: true
