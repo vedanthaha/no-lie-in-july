@@ -8,11 +8,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+const cors = require('cors');
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? ['https://*.netlify.app', 'https://*.netlify.com', 'https://your-custom-domain.com']
-        : true,
+    origin: [
+        'https://lovely-unicorn-14a79e.netlify.app', // your Netlify site
+        'http://localhost:3000' // for local testing
+    ],
     credentials: true
+}));
 }));
 app.use(express.json());
 app.use(express.static('.'));
