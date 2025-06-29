@@ -1,21 +1,21 @@
 const express = require('express');
-const cors = require('cors');
-const fs = require('fs').promises;
 const path = require('path');
+const fs = require('fs').promises;
 const crypto = require('crypto');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// CORS configuration
 app.use(cors({
-    origin: [
-        'https://lovely-unicorn-14a79e.netlify.app/', // your Netlify site
-        'http://localhost:3000' // for local testing
-    ],
-    credentials: true
+  origin: [
+    'https://lovely-unicorn-14a79e.netlify.app',
+    'http://localhost:3000'
+  ],
+  credentials: true
 }));
-}));
+
 app.use(express.json());
 app.use(express.static('.'));
 
