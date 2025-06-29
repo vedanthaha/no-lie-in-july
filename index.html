@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Lie in July - Anonymous Reporting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #6b7c6a;
+            --main-bg-texture: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="%236b7c6a"/><circle cx="10" cy="10" r="1.5" fill="%237c8c7a"/><circle cx="90" cy="90" r="1.5" fill="%237c8c7a"/><circle cx="50" cy="50" r="1.2" fill="%237c8c7a"/><circle cx="80" cy="20" r="1" fill="%237c8c7a"/><circle cx="20" cy="80" r="1" fill="%237c8c7a"/></svg>');
+            --headline: #f6f3e7;
+            --body: #f6f3e7;
+            --accent: #e6a9c6;
+            --accent-dark: #c97ba6;
+            --nav-bg: rgba(107,124,106,0.97);
+            --footer-bg: #6b7c6a;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            background: var(--main-bg);
+            background-image: var(--main-bg-texture);
+            color: var(--body);
+            font-family: 'Montserrat', Arial, sans-serif;
+            letter-spacing: 0.01em;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100vw;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-bottom: 1px solid #e6a9c633;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+        }
+        .nav-inner {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .nav-logo {
+            font-family: 'Bebas Neue', Arial, sans-serif;
+            font-size: 2.2rem;
+            color: var(--headline);
+            letter-spacing: 2px;
+            text-decoration: none;
+            font-weight: 400;
+            margin-right: 32px;
+        }
+        .nav-link {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1rem;
+            color: var(--headline);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            opacity: 0.85;
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        .nav-social {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .nav-social svg {
+            width: 22px; height: 22px;
+            fill: var(--headline);
+            opacity: 0.7;
+            transition: fill 0.2s, opacity 0.2s;
+        }
+        .nav-social svg:hover {
+            fill: var(--accent);
+            opacity: 1;
+        }
+        .nav-btn {
+            background: var(--accent);
+            color: #222;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 32px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-left: 24px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-btn:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 110px;
+            padding-bottom: 60px;
+            text-align: center;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: var(--main-bg);
+            background-image: var(--main-bg-texture);
+            opacity: 0.7;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-title {
+            font-family: 'Bebas Neue', Arial, sans-serif;
+            font-size: clamp(2.5rem, 7vw, 6.5rem);
+            color: var(--headline);
+            letter-spacing: 0.08em;
+            font-weight: 400;
+            line-height: 0.95;
+            margin-bottom: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px #0002;
+            animation: heroTextIn 1.2s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        .hero-title .highlight {
+            color: var(--accent);
+            background: none;
+            text-shadow: 0 2px 8px #e6a9c655;
+        }
+        .hero-desc {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.5rem;
+            color: var(--headline);
+            opacity: 0.85;
+            margin-bottom: 2.5em;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            animation: heroTextIn 1.5s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes heroTextIn {
+            0% { opacity: 0; transform: translateY(60px) scale(0.95); }
+            80% { opacity: 1; transform: translateY(-8px) scale(1.04); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .hero-img {
+            width: 320px;
+            max-width: 80vw;
+            margin: 0 auto 2em auto;
+            z-index: 2;
+            filter: drop-shadow(0 8px 32px #0004);
+            animation: heroImgIn 1.3s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes heroImgIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(60px); }
+            80% { opacity: 1; transform: scale(1.05) translateY(-8px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .scroll-indicator {
+            position: absolute;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            z-index: 10;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            opacity: 0.95;
+        }
+        .scooter-anim {
+            width: 80px;
+            height: 60px;
+            display: block;
+            animation: scooterBounce 2s infinite;
+        }
+        @keyframes scooterBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+        .scroll-text {
+            margin-top: 8px;
+            color: var(--headline);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+        .form-section {
+            background: var(--main-bg);
+            background-image: var(--main-bg-texture);
+            padding: 100px 0 60px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .form-container {
+            background: #fffbe7ee;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px #0002;
+            padding: 48px 36px 36px 36px;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid var(--accent);
+        }
+        .form-title {
+            font-family: 'Bebas Neue', Arial, sans-serif;
+            font-size: 2.5rem;
+            color: #222;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .form-description {
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: #444;
+            font-size: 1.1rem;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 1.5em;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        label {
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1rem;
+            color: #222;
+            font-weight: 600;
+            margin-bottom: 0.5em;
+            letter-spacing: 1px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #bbb;
+            border-radius: 8px;
+            background: #fff;
+            color: #222;
+            font-size: 1rem;
+            font-family: inherit;
+            margin-bottom: 0.2em;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 2px #e6a9c655;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 1em;
+            transition: background 0.2s, color 0.2s;
+        }
+        .submit-btn:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+        .optional {
+            color: #888;
+            font-weight: 400;
+            font-size: 0.95em;
+        }
+        .required {
+            color: var(--accent);
+        }
+        .success-message {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: #222;
+            padding: 1.2em 2em;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px #0003;
+            z-index: 1000;
+            font-weight: 700;
+            font-size: 1.1rem;
+            animation: slideInRight 0.6s ease-out;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .footer {
+            background: var(--footer-bg);
+            color: #fffbe7;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            padding: 48px 0 24px 0;
+            border-top: 1px solid #e6a9c633;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        
+        /* MYFM Car Animation */
+        .myfm-car-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .myfm-car {
+            position: absolute;
+            bottom: 20%;
+            left: -200px;
+            width: 120px;
+            height: 60px;
+            animation: driveCar 4s ease-in-out forwards;
+        }
+        
+        @keyframes driveCar {
+            0% {
+                left: -200px;
+                transform: translateY(0);
+            }
+            20% {
+                left: 20%;
+                transform: translateY(-10px);
+            }
+            40% {
+                left: 40%;
+                transform: translateY(0);
+            }
+            60% {
+                left: 60%;
+                transform: translateY(-8px);
+            }
+            80% {
+                left: 80%;
+                transform: translateY(0);
+            }
+            100% {
+                left: 120%;
+                transform: translateY(-5px);
+            }
+        }
+        
+        .car-body {
+            fill: var(--accent);
+            stroke: var(--accent-dark);
+            stroke-width: 2;
+        }
+        
+        .car-window {
+            fill: #fffbe7;
+            stroke: var(--accent-dark);
+            stroke-width: 1;
+        }
+        
+        .car-wheel {
+            fill: #222;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+        
+        .car-headlight {
+            fill: #fffbe7;
+            stroke: var(--accent-dark);
+            stroke-width: 1;
+        }
+        
+        .car-exhaust {
+            fill: #666;
+            stroke: #444;
+            stroke-width: 1;
+        }
+        
+        .myfm-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Bebas Neue', Arial, sans-serif;
+            font-size: 3rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+            opacity: 0;
+            animation: showMyfmText 4s ease-in-out forwards;
+            letter-spacing: 4px;
+        }
+        
+        @keyframes showMyfmText {
+            0%, 20% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            30%, 70% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+            80%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        .car-trail {
+            position: absolute;
+            bottom: 18%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+            opacity: 0;
+            animation: showTrail 4s ease-in-out forwards;
+        }
+        
+        @keyframes showTrail {
+            0%, 10% { opacity: 0; }
+            20%, 80% { opacity: 0.6; }
+            90%, 100% { opacity: 0; }
+        }
+        
+        /* Smoke Effects */
+        .smoke-container {
+            position: absolute;
+            bottom: 18%;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .smoke-particle {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: smokeRise 3s ease-out forwards;
+        }
+        
+        @keyframes smokeRise {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.5);
+            }
+            20% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(1);
+            }
+            60% {
+                opacity: 0.6;
+                transform: translateY(-30px) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scale(1.5);
+            }
+        }
+        
+        .exhaust-smoke {
+            position: absolute;
+            bottom: 18%;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            pointer-events: none;
+        }
+        
+        .exhaust-particle {
+            position: absolute;
+            bottom: 0;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, rgba(200,200,200,0.9) 0%, rgba(150,150,150,0.6) 50%, transparent 100%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: exhaustRise 2s ease-out forwards;
+        }
+        
+        @keyframes exhaustRise {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.3);
+            }
+            30% {
+                opacity: 0.9;
+                transform: translateY(-5px) scale(0.8);
+            }
+            70% {
+                opacity: 0.5;
+                transform: translateY(-15px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-25px) scale(1.2);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-img { width: 220px; }
+            .form-container { padding: 32px 10px; }
+            .nav-inner { padding: 0 10px; }
+            .myfm-car { width: 80px; height: 40px; }
+            .myfm-text { font-size: 2rem; }
+        }
+        @media (max-width: 600px) {
+            .hero-title { font-size: 1.5rem; }
+            .hero-img { width: 120px; }
+            .form-container { padding: 16px 2vw; }
+            .footer { font-size: 0.9rem; }
+            .myfm-car { width: 60px; height: 30px; }
+            .myfm-text { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <a href="#" class="nav-logo">NO LIE IN JULY</a>
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#how" class="nav-link">How it works</a>
+                <a href="#privacy" class="nav-link">Privacy</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-right">
+                <div class="nav-social">
+                    <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0z"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.5c0-1.104-.896-2-2-2s-2 .896-2 2v4.5h-3v-9h3v1.268c.591-.859 1.591-1.268 2.5-1.268 1.933 0 3.5 1.567 3.5 3.5v5.5z"/></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.351c0 .733.592 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.672c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.733 0 1.325-.591 1.325-1.324v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg></a>
+                </div>
+                <a href="tel:7770943943" class="nav-contact" style="display:flex;align-items:center;gap:0.5rem;color:var(--headline);text-decoration:none;font-size:0.9rem;opacity:0.8;margin-right:16px;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                        <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
+                        <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
+                    </svg>
+                    +91 7770943943
+                </a>
+                <button class="nav-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'});">Submit Report</button>
+            </div>
+        </div>
+    </nav>
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">KYA TUJHPE BHI HUYA HAI JHUT KA ATTACK?<br><span class="highlight">JOH BOL NAHI PAAYE WO TYPE KARDO</span></h1>
+            <img src="shhh.png" alt="Shhh Statue" class="hero-img" />
+            <div class="hero-desc">Pure, honest and <span class="highlight">damn important</span>.<br>Report scams, thefts, or any incident <b>100% anonymously</b>.</div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scooter-anim">
+                <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="20" cy="50" rx="10" ry="7" fill="#222" stroke="#e6a9c6" stroke-width="2"/>
+                    <ellipse cx="60" cy="50" rx="10" ry="7" fill="#222" stroke="#e6a9c6" stroke-width="2"/>
+                    <rect x="30" y="35" width="20" height="10" rx="5" fill="#e6a9c6"/>
+                    <rect x="45" y="25" width="10" height="15" rx="5" fill="#e6a9c6"/>
+                    <rect x="25" y="25" width="10" height="15" rx="5" fill="#e6a9c6"/>
+                    <rect x="38" y="15" width="4" height="15" rx="2" fill="#e6a9c6"/>
+                    <rect x="36" y="10" width="8" height="8" rx="4" fill="#fff" stroke="#e6a9c6" stroke-width="2"/>
+                </svg>
+            </div>
+            <span class="scroll-text">Scroll</span>
+        </div>
+    </section>
+    <section class="form-section" id="report">
+        <form class="form-container" id="reportForm">
+            <div class="form-title">Submit Anonymous Report</div>
+            <div class="form-description">Your identity will remain completely anonymous. Help us make our community safer.</div>
+            <div class="form-group">
+                <label for="incidentType">Incident Type <span class="required">*</span></label>
+                <select id="incidentType" name="incidentType" required>
+                    <option value="">Select incident type</option>
+                    <option value="petrol-station-scam">Petrol Station Scam</option>
+                    <option value="theft">Theft</option>
+                    <option value="fraud">Fraud</option>
+                    <option value="corruption">Corruption</option>
+                    <option value="safety-hazard">Safety Hazard</option>
+                    <option value="traffic-violation">Traffic Violation</option>
+                    <option value="environmental-issue">Environmental Issue</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="reportTitle">Report Title <span class="required">*</span></label>
+                <input type="text" id="reportTitle" name="title" required placeholder="Brief title of the incident">
+            </div>
+            <div class="form-group">
+                <label for="description">Detailed Description <span class="required">*</span></label>
+                <textarea id="description" name="description" required placeholder="Provide a detailed description of what happened..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="evidence">Evidence/Additional Information <span class="optional">(Optional)</span></label>
+                <textarea id="evidence" name="evidence" placeholder="Any additional evidence, photos, or information..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Location Where Incident Occured <span class="required">*</span></label>
+                <input type="text" id="streetAddress" placeholder="Street Address">
+                <input type="text" id="city" placeholder="City" style="margin-top:8px;">
+                <input type="text" id="state" placeholder="State/Province" style="margin-top:8px;">
+                <input type="text" id="postalCode" placeholder="Postal Code" style="margin-top:8px;">
+                <input type="text" id="landmark" placeholder="Nearby Landmark" style="margin-top:8px;">
+            </div>
+            <div class="form-group">
+                <label>Time Information <span class="optional">(Optional)</span></label>
+                <input type="date" id="incidentDate" name="date">
+                <input type="time" id="incidentTime" name="time" style="margin-top:8px;">
+            </div>
+            <div class="form-group">
+                <label for="severity">Severity Level <span class="required">*</span></label>
+                <select id="severity" name="severity" required>
+                    <option value="">Select severity level</option>
+                    <option value="low">Low - Minor incident</option>
+                    <option value="medium">Medium - Moderate concern</option>
+                    <option value="high">High - Serious incident</option>
+                    <option value="critical">Critical - Emergency situation</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn" id="submitReport">
+                <span id="submitText">Submit Anonymous Report</span>
+                <span id="submitLoading" class="loading" style="display: none;"></span>
+            </button>
+        </form>
+    </section>
+    <footer class="footer">
+        <div>© 2025 No Lie in July - All rights reserved | <a href="#">Cookies</a> | <a href="#">Privacy policy</a></div>
+        <div style="margin-top:8px;font-size:0.9em;opacity:0.7;">Website inspired by <a href="https://brewdistrict24.com/en" target="_blank">BrewDistrict24</a></div>
+        <div style="margin-top:16px;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9em;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="opacity:0.8;">
+                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                    <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
+                    <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
+                </svg>
+                <a href="tel:7770943943" style="color:var(--accent);text-decoration:none;">+91 7770943943</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9em;">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="opacity:0.8;">
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2 2v7h12V6H2zm12-1V4a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v2z"/>
+                </svg>
+                <a href="mailto:support@nolieinjuly.com" style="color:var(--accent);text-decoration:none;">support@nolieinjuly.com</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- MYFM Car Animation Container -->
+    <div class="myfm-car-container" id="myfmCarContainer">
+        <div class="myfm-car" id="myfmCar">
+            <svg width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Car Body -->
+                <rect x="20" y="25" width="70" height="25" rx="8" class="car-body"/>
+                <rect x="25" y="20" width="60" height="15" rx="6" class="car-body"/>
+                
+                <!-- Windows -->
+                <rect x="30" y="22" width="15" height="10" rx="2" class="car-window"/>
+                <rect x="50" y="22" width="15" height="10" rx="2" class="car-window"/>
+                <rect x="70" y="22" width="10" height="10" rx="2" class="car-window"/>
+                
+                <!-- Wheels -->
+                <circle cx="35" cy="50" r="8" class="car-wheel"/>
+                <circle cx="75" cy="50" r="8" class="car-wheel"/>
+                
+                <!-- Headlights -->
+                <circle cx="95" cy="30" r="3" class="car-headlight"/>
+                <circle cx="95" cy="35" r="2" class="car-headlight"/>
+                
+                <!-- Exhaust -->
+                <rect x="15" y="40" width="8" height="3" rx="1" class="car-exhaust"/>
+                <rect x="12" y="42" width="4" height="2" rx="1" class="car-exhaust"/>
+                
+                <!-- MYFM Logo on car -->
+                <text x="40" y="38" font-family="Arial" font-size="6" fill="#222" font-weight="bold">MYFM</text>
+            </svg>
+        </div>
+        <div class="myfm-text">MYFM</div>
+        <div class="car-trail"></div>
+        <div class="smoke-container" id="smokeContainer"></div>
+        <div class="exhaust-smoke" id="exhaustSmoke"></div>
+    </div>
+    
+    <script>
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        scrollIndicator.addEventListener('click', function() {
+            document.getElementById('report').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            if (scrollY < windowHeight * 0.8) {
+                scrollIndicator.style.display = 'flex';
+            } else {
+                scrollIndicator.style.display = 'none';
+            }
+        });
+        document.getElementById('reportForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitReport');
+            const submitText = document.getElementById('submitText');
+            const submitLoading = document.getElementById('submitLoading');
+            submitText.style.display = 'none';
+            submitLoading.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://your-backend-url.onrender.com';
+            
+            const formData = {
+                incidentType: document.getElementById('incidentType').value,
+                title: document.getElementById('reportTitle').value,
+                description: document.getElementById('description').value,
+                evidence: document.getElementById('evidence').value,
+                address: {
+                    street: document.getElementById('streetAddress').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    postalCode: document.getElementById('postalCode').value,
+                    landmark: document.getElementById('landmark').value
+                },
+                incidentDate: document.getElementById('incidentDate').value,
+                incidentTime: document.getElementById('incidentTime').value,
+                severity: document.getElementById('severity').value
+            };
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/report`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if (response.ok) {
+                    showSuccessMessage('Report submitted successfully!');
+                    document.getElementById('reportForm').reset();
+                    // Trigger MYFM car animation
+                    triggerMyfmCarAnimation();
+                } else {
+                    throw new Error('Failed to submit report');
+                }
+            } catch (error) {
+                showSuccessMessage('Error submitting report. Please try again.', 'error');
+            } finally {
+                submitText.style.display = 'inline';
+                submitLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+        
+        function triggerMyfmCarAnimation() {
+            const container = document.getElementById('myfmCarContainer');
+            const car = document.getElementById('myfmCar');
+            const text = document.querySelector('.myfm-text');
+            const trail = document.querySelector('.car-trail');
+            const smokeContainer = document.getElementById('smokeContainer');
+            const exhaustSmoke = document.getElementById('exhaustSmoke');
+            
+            // Reset animations
+            car.style.animation = 'none';
+            text.style.animation = 'none';
+            trail.style.animation = 'none';
+            
+            // Clear previous smoke
+            smokeContainer.innerHTML = '';
+            exhaustSmoke.innerHTML = '';
+            
+            // Force reflow
+            car.offsetHeight;
+            text.offsetHeight;
+            trail.offsetHeight;
+            
+            // Show container and start animations
+            container.style.display = 'block';
+            car.style.animation = 'driveCar 4s ease-in-out forwards';
+            text.style.animation = 'showMyfmText 4s ease-in-out forwards';
+            trail.style.animation = 'showTrail 4s ease-in-out forwards';
+            
+            // Create smoke effects
+            createSmokeEffects();
+            
+            // Hide container after animation
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 4000);
+        }
+        
+        function createSmokeEffects() {
+            const smokeContainer = document.getElementById('smokeContainer');
+            const exhaustSmoke = document.getElementById('exhaustSmoke');
+            
+            // Create main smoke particles
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const smoke = document.createElement('div');
+                    smoke.className = 'smoke-particle';
+                    smoke.style.left = Math.random() * 100 + '%';
+                    smoke.style.animationDelay = Math.random() * 2 + 's';
+                    smokeContainer.appendChild(smoke);
+                    
+                    // Remove smoke particle after animation
+                    setTimeout(() => {
+                        if (smoke.parentNode) {
+                            smoke.parentNode.removeChild(smoke);
+                        }
+                    }, 3000);
+                }, i * 200);
+            }
+            
+            // Create exhaust particles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const exhaust = document.createElement('div');
+                    exhaust.className = 'exhaust-particle';
+                    exhaust.style.left = (Math.random() * 20 + 10) + '%'; // Concentrate near car
+                    exhaust.style.animationDelay = Math.random() * 1 + 's';
+                    exhaustSmoke.appendChild(exhaust);
+                    
+                    // Remove exhaust particle after animation
+                    setTimeout(() => {
+                        if (exhaust.parentNode) {
+                            exhaust.parentNode.removeChild(exhaust);
+                        }
+                    }, 2000);
+                }, i * 150);
+            }
+        }
+        
+        function showSuccessMessage(message, type = 'success') {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success-message';
+            successDiv.style.background = type === 'error' ? '#c97ba6' : '#e6a9c6';
+            successDiv.style.color = type === 'error' ? '#fff' : '#222';
+            successDiv.textContent = message;
+            document.body.appendChild(successDiv);
+            setTimeout(() => { successDiv.remove(); }, 5000);
+        }
+    </script>
+</body>
+</html> 
