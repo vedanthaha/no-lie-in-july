@@ -563,21 +563,120 @@
             .myfm-car { width: 60px; height: 30px; }
             .myfm-text { font-size: 1.5rem; }
         }
+
+        .desktop-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        #hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        #hamburger-menu span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: var(--headline);
+            transition: 0.4s;
+        }
+
+        #mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--main-bg);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .mobile-menu-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .mobile-menu-content .nav-link {
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+        }
+        
+        .mobile-menu-content .nav-social {
+            margin-top: 24px;
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: var(--headline);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .nav-right .nav-social, .nav-right .nav-contact {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .desktop-nav-links, .nav-right {
+                display: none;
+            }
+
+            #hamburger-menu {
+                display: block;
+            }
+             .hero-title { font-size: 2.8rem; }
+             .hero-desc { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
+    <div id="mobile-menu-overlay">
+        <div class="mobile-menu-close">&times;</div>
+        <div class="mobile-menu-content">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#how" class="nav-link">How it works</a>
+            <a href="#privacy" class="nav-link">Privacy</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <hr>
+            <button class="nav-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'}); document.getElementById('mobile-menu-overlay').style.display='none';">Submit Report</button>
+            <div class="nav-social">
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241 1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0z"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.5c0-1.104-.896-2-2-2s-2 .896-2 2v4.5h-3v-9h3v1.268c.591-.859 1.591-1.268 2.5-1.268 1.933 0 3.5 1.567 3.5 3.5v5.5z"/></svg></a>
+                <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.351c0 .733.592 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.672c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.733 0 1.325-.591 1.325-1.324v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg></a>
+            </div>
+        </div>
+    </div>
     <nav class="navbar">
         <div class="nav-inner">
             <div class="nav-left">
                 <a href="#" class="nav-logo">NO LIE IN JULY</a>
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#how" class="nav-link">How it works</a>
-                <a href="#privacy" class="nav-link">Privacy</a>
-                <a href="#contact" class="nav-link">Contact</a>
+                <div class="desktop-nav-links">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#how" class="nav-link">How it works</a>
+                    <a href="#privacy" class="nav-link">Privacy</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
             </div>
             <div class="nav-right">
                 <div class="nav-social">
-                    <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0z"/><circle cx="12" cy="12" r="3.5"/></svg></a>
+                    <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241 1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.771.131 4.659.363 3.678 1.344c-.98.98-1.213 2.092-1.272 3.373C2.013 5.668 2 6.077 2 12c0 5.923.013 6.332.072 7.613.059 1.281.292 2.393 1.272 3.373.98.98 2.092 1.213 3.373 1.272C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.281-.059 2.393-.292 3.373-1.272.98-.98 1.213-2.092 1.272-3.373.059-1.281.072-1.69.072-7.613 0-5.923-.013-6.332-.072-7.613-.059-1.281-.292-2.393-1.272-3.373-.98-.98-2.092-1.213-3.373-1.272C15.668.013 15.259 0 12 0z"/><circle cx="12" cy="12" r="3.5"/></svg></a>
                     <a href="#"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.5c0-1.104-.896-2-2-2s-2 .896-2 2v4.5h-3v-9h3v1.268c.591-.859 1.591-1.268 2.5-1.268 1.933 0 3.5 1.567 3.5 3.5v5.5z"/></svg></a>
                     <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.351c0 .733.592 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.672c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.733 0 1.325-.591 1.325-1.324v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg></a>
                 </div>
@@ -591,6 +690,11 @@
                 </a>
                 <button class="nav-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'});">Submit Report</button>
             </div>
+            <button id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
     <section class="hero" id="home">
@@ -731,6 +835,28 @@
     </div>
     
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hamburger = document.getElementById('hamburger-menu');
+            const mobileMenu = document.getElementById('mobile-menu-overlay');
+            const closeMenu = document.querySelector('.mobile-menu-close');
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+
+            function openMenu() {
+                mobileMenu.style.display = 'flex';
+            }
+
+            function close() {
+                mobileMenu.style.display = 'none';
+            }
+
+            hamburger.addEventListener('click', openMenu);
+            closeMenu.addEventListener('click', close);
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', close);
+            });
+        });
+
         const scrollIndicator = document.querySelector('.scroll-indicator');
         scrollIndicator.addEventListener('click', function() {
             document.getElementById('report').scrollIntoView({
@@ -756,7 +882,7 @@
             submitLoading.style.display = 'inline-block';
             submitBtn.disabled = true;
             
-            const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://no-lie-in-july.onrender.com';
+            const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://your-backend-url.onrender.com';
             
             const formData = {
                 incidentType: document.getElementById('incidentType').value,
@@ -886,4 +1012,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
