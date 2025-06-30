@@ -21,941 +21,233 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
-        /* Smooth scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Header */
         .header {
             padding: 60px 20px;
             text-align: center;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            position: relative;
         }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-        }
-
         .title {
             font-size: clamp(2.5rem, 6vw, 4rem);
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
         }
-
         .subtitle {
             font-size: clamp(1rem, 2.5vw, 1.3rem);
             color: #888;
-            font-weight: 300;
-            animation: fadeInUp 1s ease-out 0.2s both;
         }
-
-        .support-info {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .support-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .support-item svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        .support-item a {
-            color: #e6a9c6;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .support-item a:hover {
-            text-decoration: underline;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Main content */
         .main-content {
-            padding: 60px 20px;
-            background: #0f0f0f;
+            padding: 20px;
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
-
-        /* Stats section */
-        .stats-section {
-            margin-bottom: 60px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+        .login-section, .dashboard-section {
             padding: 2rem;
-            text-align: center;
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
+            background: #1a1a1a;
+            border-radius: 12px;
         }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.2);
+        .login-form {
+            max-width: 400px;
+            margin: auto;
         }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #888;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        /* Filters section */
-        .filters-section {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            backdrop-filter: blur(20px);
-        }
-
-        .filters-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+        .login-form h2 {
             margin-bottom: 1.5rem;
-            color: #ffffff;
+            text-align: center;
         }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .filter-group label {
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .filter-group select,
-        .filter-group input {
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            color: #ffffff;
-            font-size: 0.9rem;
-            font-family: inherit;
+            border: 1px solid #333;
+            background: #222;
+            color: #fff;
         }
-
-        .filter-group select:focus,
-        .filter-group input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* Reports section */
-        .reports-section {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
-        }
-
-        .reports-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .reports-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #ffffff;
-        }
-
-        .export-btn {
-            background: #ffffff;
-            color: #000000;
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
+            background: #e6a9c6;
+            color: #111;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
         }
-
-        .export-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-2px);
-        }
-
-        /* Report cards */
         .reports-grid {
             display: grid;
             gap: 1.5rem;
+            margin-top: 2rem;
         }
-
         .report-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            background: #222;
             padding: 1.5rem;
-            transition: all 0.3s ease;
+            border-radius: 8px;
         }
-
-        .report-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .report-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
         .report-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #ffffff;
+            margin-bottom: 0.5rem;
         }
-
-        .report-meta {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .report-id {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        .severity-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .severity-low { background: #4CAF50; color: white; }
-        .severity-medium { background: #FF9800; color: white; }
-        .severity-high { background: #f44336; color: white; }
-        .severity-critical { background: #9C27B0; color: white; }
-
-        .report-content {
-            margin-bottom: 1rem;
-        }
-
-        .report-description {
-            color: #ccc;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .report-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .detail-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .detail-label {
-            color: #888;
-            font-weight: 500;
-            margin-bottom: 0.25rem;
-        }
-
-        .detail-value {
-            color: #ffffff;
-        }
-
         .delete-btn {
-            background: rgba(244, 67, 54, 0.1);
-            color: #ff6b6b;
-            border: 1px solid rgba(244, 67, 54, 0.3);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            margin-top: 1rem;
-        }
-
-        .delete-btn:hover {
-            background: rgba(244, 67, 54, 0.2);
-            border-color: rgba(244, 67, 54, 0.5);
-            transform: translateY(-1px);
-        }
-
-        .report-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 1rem;
-        }
-
-        .no-reports {
-            text-align: center;
-            padding: 3rem;
-            color: #888;
-            font-size: 1.1rem;
-        }
-
-        /* Loading state */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: #888;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Error state */
-        .error {
-            background: rgba(244, 67, 54, 0.1);
-            border: 1px solid rgba(244, 67, 54, 0.3);
-            color: #ff6b6b;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .report-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .report-meta {
-                width: 100%;
-            }
-        }
-
-        /* Smooth transitions */
-        * {
-            transition: all 0.3s ease;
-        }
-
-        /* Login Modal */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .login-form {
-            background: #1a1a1a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            width: 100%;
-            max-width: 400px;
-            backdrop-filter: blur(20px);
-        }
-
-        .login-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            color: #ffffff;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            color: #ffffff;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            font-family: inherit;
-        }
-
-        .login-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: #ffffff;
-            color: #000000;
+            background: #ff6b6b;
+            color: #111;
             border: none;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .login-btn:hover {
-            background: #f0f0f0;
-            transform: translateY(-1px);
-        }
-
-        .hidden {
-            display: none !important;
+            float: right;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
-        <div class="header-content">
-            <h1 class="title">Admin Dashboard</h1>
-            <p class="subtitle">Monitor and manage anonymous reports</p>
-            <div class="support-info">
-                <div class="support-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-                        <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
-                        <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
-                        <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
-                    </svg>
-                    <a href="tel:7770943943">+91 7770943943</a>
-                </div>
-                <div class="support-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2 2v7h12V6H2zm12-1V4a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v2z"/>
-                    </svg>
-                    <a href="mailto:support@nolieinjuly.com">support@nolieinjuly.com</a>
-                </div>
-            </div>
-        </div>
+        <h1 class="title">Admin Dashboard</h1>
+        <p class="subtitle">Monitor and manage anonymous reports</p>
     </header>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <!-- Error Display -->
-            <div id="error" class="error" style="display: none;"></div>
-
-            <!-- Stats Section -->
-            <section class="stats-section">
-                <div class="stats-grid" id="statsGrid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalReports">-</div>
-                        <div class="stat-label">Total Reports</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="todayReports">-</div>
-                        <div class="stat-label">Today's Reports</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="criticalReports">-</div>
-                        <div class="stat-label">Critical Reports</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="avgSeverity">-</div>
-                        <div class="stat-label">Avg Severity</div>
-                    </div>
-                </div>
+            <section id="loginSection">
+                <form id="loginForm" class="login-form">
+                    <h2>Admin Login</h2>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                    <button type="submit">Login</button>
+                </form>
             </section>
 
-            <!-- Filters Section -->
-            <section class="filters-section">
-                <h2 class="filters-title">Filter Reports</h2>
-                <div class="filters-grid">
-                    <div class="filter-group">
-                        <label for="severityFilter">Severity Level</label>
-                        <select id="severityFilter">
-                            <option value="">All Severities</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="critical">Critical</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="dateFilter">Date Range</label>
-                        <select id="dateFilter">
-                            <option value="">All Time</option>
-                            <option value="today">Today</option>
-                            <option value="week">This Week</option>
-                            <option value="month">This Month</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="searchFilter">Search</label>
-                        <input type="text" id="searchFilter" placeholder="Search reports...">
-                    </div>
-                </div>
-            </section>
-
-            <!-- Reports Section -->
-            <section class="reports-section">
-                <div class="reports-header">
-                    <h2 class="reports-title">Anonymous Reports</h2>
-                    <button class="export-btn" onclick="exportReports()">Export CSV</button>
-                </div>
-                
-                <div id="reportsContainer">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Loading reports...</p>
-                    </div>
+            <section id="dashboardSection" style="display: none;">
+                <h2>All Reports <button id="logoutBtn" style="float: right;">Logout</button></h2>
+                <div id="reportsGrid" class="reports-grid">
+                    <!-- Reports will be loaded here -->
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Login Modal -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-form">
-            <h2 class="login-title">Admin Login</h2>
-            <input type="password" id="adminPassword" class="login-input" placeholder="Enter admin password" />
-            <button class="login-btn" onclick="login()">Login</button>
-        </div>
-    </div>
-
     <script>
-        let allReports = [];
-        let filteredReports = [];
-        let adminToken = localStorage.getItem('adminToken');
-        const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://no-lie-in-july.onrender.com';
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginSection = document.getElementById('loginSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const loginForm = document.getElementById('loginForm');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const reportsGrid = document.getElementById('reportsGrid');
 
-        // Check authentication on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (!adminToken) {
-                document.getElementById('loginModal').classList.remove('hidden');
-            } else {
-                loadReports();
-                loadStats();
-                
-                // Add event listeners for filters
-                document.getElementById('severityFilter').addEventListener('change', filterReports);
-                document.getElementById('dateFilter').addEventListener('change', filterReports);
-                document.getElementById('searchFilter').addEventListener('input', filterReports);
+            const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://no-lie-in-july.onrender.com';
+
+            function checkLogin() {
+                const token = localStorage.getItem('adminToken');
+                if (token) {
+                    showDashboard(token);
+                } else {
+                    showLogin();
+                }
             }
-        });
 
-        async function login() {
-            const password = document.getElementById('adminPassword').value;
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password })
-                });
-                
-                if (response.ok) {
+            function showLogin() {
+                loginSection.style.display = 'block';
+                dashboardSection.style.display = 'none';
+            }
+
+            async function showDashboard(token) {
+                loginSection.style.display = 'none';
+                dashboardSection.style.display = 'block';
+                await fetchReports(token);
+            }
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const password = document.getElementById('password').value;
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password })
+                    });
                     const data = await response.json();
-                    adminToken = data.token;
-                    localStorage.setItem('adminToken', adminToken);
-                    document.getElementById('loginModal').classList.add('hidden');
-                    
-                    loadReports();
-                    loadStats();
-                    
-                    // Add event listeners for filters
-                    document.getElementById('severityFilter').addEventListener('change', filterReports);
-                    document.getElementById('dateFilter').addEventListener('change', filterReports);
-                    document.getElementById('searchFilter').addEventListener('input', filterReports);
-                } else {
-                    alert('Invalid password');
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('Login failed. Please try again.');
-            }
-        }
-
-        async function loadReports() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/reports`, {
-                    headers: { 'x-admin-token': adminToken }
-                });
-                if (response.ok) {
-                    allReports = await response.json();
-                    filteredReports = [...allReports];
-                    displayReports();
-                } else if (response.status === 401) {
-                    // Token expired, show login
-                    localStorage.removeItem('adminToken');
-                    adminToken = null;
-                    document.getElementById('loginModal').classList.remove('hidden');
-                } else {
-                    throw new Error('Failed to load reports');
-                }
-            } catch (error) {
-                console.error('Error loading reports:', error);
-                showError('Failed to load reports. Please refresh the page.');
-            }
-        }
-
-        async function loadStats() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/stats`, {
-                    headers: { 'x-admin-token': adminToken }
-                });
-                if (response.ok) {
-                    const stats = await response.json();
-                    updateStats(stats);
-                } else if (response.status === 401) {
-                    // Token expired, show login
-                    localStorage.removeItem('adminToken');
-                    adminToken = null;
-                    document.getElementById('loginModal').classList.remove('hidden');
-                }
-            } catch (error) {
-                console.error('Error loading stats:', error);
-            }
-        }
-
-        function updateStats(stats) {
-            document.getElementById('totalReports').textContent = stats.totalReports || 0;
-            document.getElementById('todayReports').textContent = stats.todayReports || 0;
-            document.getElementById('criticalReports').textContent = stats.criticalReports || 0;
-            document.getElementById('avgSeverity').textContent = stats.averageSeverity || 'N/A';
-        }
-
-        function filterReports() {
-            const severityFilter = document.getElementById('severityFilter').value;
-            const dateFilter = document.getElementById('dateFilter').value;
-            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
-
-            filteredReports = allReports.filter(report => {
-                // Severity filter
-                if (severityFilter && report.severity !== severityFilter) {
-                    return false;
-                }
-
-                // Date filter
-                if (dateFilter) {
-                    const reportDate = new Date(report.timestamp);
-                    const now = new Date();
-                    
-                    switch (dateFilter) {
-                        case 'today':
-                            if (reportDate.toDateString() !== now.toDateString()) return false;
-                            break;
-                        case 'week':
-                            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-                            if (reportDate < weekAgo) return false;
-                            break;
-                        case 'month':
-                            const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-                            if (reportDate < monthAgo) return false;
-                            break;
+                    if (response.ok && data.token) {
+                        localStorage.setItem('adminToken', data.token);
+                        showDashboard(data.token);
+                    } else {
+                        alert(data.error || 'Login failed');
                     }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('An error occurred during login.');
                 }
-
-                // Search filter
-                if (searchFilter) {
-                    const searchText = `${report.title} ${report.description} ${report.evidence}`.toLowerCase();
-                    if (!searchText.includes(searchFilter)) {
-                        return false;
-                    }
-                }
-
-                return true;
             });
 
-            displayReports();
-        }
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('adminToken');
+                showLogin();
+            });
 
-        function displayReports() {
-            const container = document.getElementById('reportsContainer');
-            
-            if (filteredReports.length === 0) {
-                container.innerHTML = '<div class="no-reports">No reports found matching your filters.</div>';
-                return;
-            }
+            async function fetchReports(token) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/reports`, {
+                        headers: { 'x-admin-token': token }
+                    });
 
-            container.innerHTML = `
-                <div class="reports-grid">
-                    ${filteredReports.map(report => createReportCard(report)).join('')}
-                </div>
-            `;
-        }
-
-        function createReportCard(report) {
-            const date = new Date(report.timestamp).toLocaleString();
-            const severityClass = `severity-${report.severity}`;
-            
-            return `
-                <div class="report-card">
-                    <div class="report-header">
-                        <h3 class="report-title">${report.title}</h3>
-                        <div class="report-meta">
-                            <span class="report-id">${report.id}</span>
-                            <span class="severity-badge ${severityClass}">${report.severity}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="report-content">
-                        <p class="report-description">${report.description}</p>
-                        
-                        <div class="report-details">
-                            <div class="detail-group">
-                                <span class="detail-label">Submitted</span>
-                                <span class="detail-value">${date}</span>
-                            </div>
-                            
-                            ${report.address && report.address.street ? `
-                                <div class="detail-group">
-                                    <span class="detail-label">Location</span>
-                                    <span class="detail-value">${report.address.street}, ${report.address.city || ''}</span>
-                                </div>
-                            ` : ''}
-                            
-                            ${report.incidentDate ? `
-                                <div class="detail-group">
-                                    <span class="detail-label">Incident Date</span>
-                                    <span class="detail-value">${report.incidentDate} ${report.incidentTime || ''}</span>
-                                </div>
-                            ` : ''}
-                            
-                            ${report.evidence ? `
-                                <div class="detail-group">
-                                    <span class="detail-label">Evidence</span>
-                                    <span class="detail-value">${report.evidence}</span>
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                    <div class="report-actions">
-                        <button class="delete-btn" onclick="deleteReport('${report.id}')">Delete</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function exportReports() {
-            if (filteredReports.length === 0) {
-                alert('No reports to export.');
-                return;
-            }
-
-            const csvContent = generateCSV(filteredReports);
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `reports_${new Date().toISOString().split('T')[0]}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }
-
-        function generateCSV(reports) {
-            const headers = ['ID', 'Title', 'Description', 'Severity', 'Timestamp', 'Address', 'Time', 'Evidence'];
-            const rows = reports.map(report => [
-                report.id,
-                `"${report.title}"`,
-                `"${report.description}"`,
-                report.severity,
-                new Date(report.timestamp).toLocaleString(),
-                `"${formatAddress(report.address)}"`,
-                `"${formatTime(report.time)}"`,
-                `"${report.evidence || ''}"`
-            ]);
-            
-            return [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
-        }
-
-        function formatAddress(address) {
-            if (!address) return '';
-            const parts = [address.street, address.city, address.state, address.postalCode, address.landmark];
-            return parts.filter(part => part).join(', ');
-        }
-
-        function formatTime(time) {
-            if (!time) return '';
-            return `${time.date} ${time.time || ''}`.trim();
-        }
-
-        function showError(message) {
-            const errorDiv = document.getElementById('error');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 5000);
-        }
-
-        async function deleteReport(reportId) {
-            if (!confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`${API_BASE_URL}/api/report/${reportId}`, {
-                    method: 'DELETE',
-                    headers: { 'x-admin-token': adminToken }
-                });
-                
-                if (response.ok) {
-                    // Remove from local arrays
-                    allReports = allReports.filter(report => report.id !== reportId);
-                    filteredReports = filteredReports.filter(report => report.id !== reportId);
-                    
-                    // Refresh display
-                    displayReports();
-                    loadStats();
-                    
-                    // Show success message
-                    showSuccessMessage('Report deleted successfully');
-                } else {
-                    throw new Error('Failed to delete report');
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            localStorage.removeItem('adminToken');
+                            showLogin();
+                        }
+                        throw new Error('Failed to fetch reports');
+                    }
+                    const reports = await response.json();
+                    displayReports(reports);
+                } catch (error) {
+                    console.error('Fetch reports error:', error);
+                    reportsGrid.innerHTML = '<p>Error loading reports.</p>';
                 }
-            } catch (error) {
-                console.error('Error deleting report:', error);
-                showError('Failed to delete report. Please try again.');
             }
-        }
 
-        function showSuccessMessage(message) {
-            // Create temporary success message
-            const successDiv = document.createElement('div');
-            successDiv.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #4CAF50;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 8px;
-                z-index: 1000;
-                font-weight: 600;
-                animation: slideInRight 0.3s ease-out;
-            `;
-            successDiv.textContent = message;
-            document.body.appendChild(successDiv);
+            function displayReports(reports) {
+                if (!reports || reports.length === 0) {
+                    reportsGrid.innerHTML = '<p>No reports found.</p>';
+                    return;
+                }
+                reportsGrid.innerHTML = reports.map(report => `
+                    <div class="report-card" data-id="${report.id}">
+                        <button class="delete-btn" data-id="${report.id}">Delete</button>
+                        <h3 class="report-title">${report.title}</h3>
+                        <p><strong>Type:</strong> ${report.incidentType}</p>
+                        <p><strong>Description:</strong> ${report.description}</p>
+                        <p><strong>Submitted:</strong> ${new Date(report.submittedAt).toLocaleString()}</p>
+                    </div>
+                `).join('');
+            }
+
+            reportsGrid.addEventListener('click', async (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const token = localStorage.getItem('adminToken');
+                    if (!token) return;
+
+                    const reportId = e.target.dataset.id;
+                    if (confirm(`Are you sure you want to delete report ${reportId}?`)) {
+                        try {
+                            const response = await fetch(`${API_BASE_URL}/api/report/${reportId}`, {
+                                method: 'DELETE',
+                                headers: { 'x-admin-token': token }
+                            });
+
+                            if (response.ok) {
+                                alert('Report deleted successfully.');
+                                fetchReports(token);
+                            } else {
+                                const data = await response.json();
+                                alert(data.error || 'Failed to delete report.');
+                            }
+                        } catch (error) {
+                            console.error('Delete error:', error);
+                            alert('An error occurred while deleting the report.');
+                        }
+                    }
+                }
+            });
             
-            setTimeout(() => {
-                successDiv.remove();
-            }, 3000);
-        }
-
-        // Auto-refresh every 30 seconds
-        setInterval(() => {
-            loadReports();
-            loadStats();
-        }, 30000);
+            checkLogin();
+        });
     </script>
 </body>
-</html> 
+</html>
