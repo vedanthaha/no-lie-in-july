@@ -1,4 +1,4 @@
-<!-- CACHE_BUSTER_FINAL_v1 -->
+<!-- CACHE_BUSTER_FINAL_v2 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +18,9 @@
             --accent-dark: #c97ba6;
             --nav-bg: rgba(107,124,106,0.97);
             --footer-bg: #6b7c6a;
+        }
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
         html, body {
             height: 100%;
@@ -77,6 +80,7 @@
             font-weight: 500;
             opacity: 0.85;
             transition: color 0.2s;
+            white-space: nowrap;
         }
         .nav-link:hover {
             color: var(--accent);
