@@ -8,244 +8,571 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --border-primary: rgba(255, 255, 255, 0.1);
+            --accent: #e6a9c6;
+            --accent-dark: #c97ba6;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
-        .header {
-            padding: 60px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-        }
-        .title {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
-        }
-        .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            color: #888;
-        }
-        .main-content {
-            padding: 20px;
-        }
+
         .container {
-            max-width: 1200px;
+            width: 100%;
+            max-width: 1400px;
             margin: 0 auto;
+            padding: 0 20px;
         }
-        .login-section, .dashboard-section {
-            padding: 2rem;
-            background: #1a1a1a;
-            border-radius: 12px;
+
+        .header {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            position: relative;
         }
-        .login-form {
-            max-width: 400px;
-            margin: auto;
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
         }
-        .login-form h2 {
+        
+        .title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--text-secondary);
+            font-weight: 300;
             margin-bottom: 1.5rem;
+        }
+        
+        #logoutBtn {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #logoutBtn:hover {
+            background: var(--accent-dark);
+            color: #fff;
+        }
+
+        .main-content {
+            padding: 40px 0;
+            background: #0f0f0f;
+        }
+        
+        .login-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+        
+        .login-form-container {
+            background: var(--bg-secondary);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-primary);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
-        .login-form input {
+
+        .login-form-container h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .login-form-container input {
             width: 100%;
             padding: 12px;
             margin-bottom: 1rem;
             border-radius: 8px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
+            border: 1px solid var(--border-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
         }
-        .login-form button {
+
+        .login-form-container button {
             width: 100%;
             padding: 12px;
-            border-radius: 8px;
             border: none;
-            background: #e6a9c6;
-            color: #111;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .reports-grid {
-            display: grid;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .report-card {
-            background: #222;
-            padding: 1.5rem;
             border-radius: 8px;
-        }
-        .report-title {
-            font-size: 1.2rem;
+            background: var(--accent);
+            color: #000;
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .delete-btn {
-            background: #ff6b6b;
-            color: #111;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
             cursor: pointer;
-            float: right;
+        }
+
+        /* Stats section */
+        .stats-section {
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Filters section */
+        .card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-primary);
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        /* Reports Table */
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .export-btn {
+            background: var(--text-primary);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .reports-table th, .reports-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        .reports-table th {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        
+        .reports-table tr:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .reports-table td {
+            font-size: 0.95rem;
+        }
+        
+        .severity-high, .severity-critical {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        /* Loader */
+        .loader {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1 class="title">Admin Dashboard</h1>
-        <p class="subtitle">Monitor and manage anonymous reports</p>
-    </header>
-
-    <main class="main-content">
-        <div class="container">
-            <section id="loginSection">
-                <form id="loginForm" class="login-form">
-                    <h2>Admin Login</h2>
-                    <input type="password" id="password" placeholder="Enter password" required>
-                    <button type="submit">Login</button>
-                </form>
-            </section>
-
-            <section id="dashboardSection" style="display: none;">
-                <h2>All Reports <button id="logoutBtn" style="float: right;">Logout</button></h2>
-                <div id="reportsGrid" class="reports-grid">
-                    <!-- Reports will be loaded here -->
-                </div>
-            </section>
+    <div id="loginSection">
+        <div class="header">
+            <div class="container header-content">
+                <h1 class="title">Admin Login</h1>
+                <p class="subtitle">No Lie In July</p>
+            </div>
         </div>
-    </main>
+        <main class="main-content">
+            <div class="login-section">
+                <div class="login-form-container">
+                    <h2>Enter Credentials</h2>
+                    <form id="loginForm">
+                        <input type="text" id="username" placeholder="Username" required>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
 
+    <div id="dashboardSection" class="hidden">
+        <header class="header">
+            <div class="container header-content">
+                <h1 class="title">Admin Dashboard</h1>
+                <p class="subtitle">Welcome back. Here are the latest reports.</p>
+                <button id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="container">
+                <section class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div id="totalReports" class="stat-number">0</div>
+                            <div class="stat-label">Total Reports</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="reportsToday" class="stat-number">0</div>
+                            <div class="stat-label">Reports Today</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="highestSeverity" class="stat-number">N/A</div>
+                            <div class="stat-label">Highest Severity</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="mostCommonType" class="stat-number">N/A</div>
+                            <div class="stat-label">Most Common Type</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="filters-section card">
+                    <h2 class="card-title">Filters</h2>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="filterSeverity">Severity</label>
+                            <select id="filterSeverity">
+                                <option value="">All</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterType">Incident Type</label>
+                            <select id="filterType">
+                                <option value="">All</option>
+                                <option value="petrol-station-scam">Petrol Station Scam</option>
+                                <option value="theft">Theft</option>
+                                <option value="fraud">Fraud</option>
+                                <option value="corruption">Corruption</option>
+                                <option value="safety-hazard">Safety Hazard</option>
+                                <option value="traffic-violation">Traffic Violation</option>
+                                <option value="environmental-issue">Environmental Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterDateStart">Start Date</label>
+                            <input type="date" id="filterDateStart">
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterDateEnd">End Date</label>
+                            <input type="date" id="filterDateEnd">
+                        </div>
+                    </div>
+                </section>
+
+                <section class="reports-section card">
+                    <div class="reports-header">
+                        <h2 class="card-title">All Reports</h2>
+                        <button id="exportCsvBtn" class="export-btn">Export to CSV</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="reports-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Title</th>
+                                    <th>Severity</th>
+                                    <th>Location</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportsTableBody">
+                                <!-- Reports will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="loader" class="loader">Loading reports...</div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('loginSection');
             const dashboardSection = document.getElementById('dashboardSection');
             const loginForm = document.getElementById('loginForm');
             const logoutBtn = document.getElementById('logoutBtn');
-            const reportsGrid = document.getElementById('reportsGrid');
-
+            const reportsTableBody = document.getElementById('reportsTableBody');
+            const loader = document.getElementById('loader');
+            
             const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://no-lie-in-july.onrender.com';
+            let allReports = [];
 
             function checkLogin() {
                 const token = localStorage.getItem('adminToken');
                 if (token) {
-                    showDashboard(token);
-                } else {
-                    showLogin();
+                    loginSection.classList.add('hidden');
+                    dashboardSection.classList.remove('hidden');
+                    fetchReports(token);
                 }
             }
 
-            function showLogin() {
-                loginSection.style.display = 'block';
-                dashboardSection.style.display = 'none';
+            async function fetchReports(token) {
+                loader.classList.remove('hidden');
+                reportsTableBody.innerHTML = '';
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/reports`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                        }
+                        throw new Error('Failed to fetch reports');
+                    }
+                    allReports = await response.json();
+                    applyFilters();
+                    updateStats();
+                } catch (error) {
+                    console.error('Error fetching reports:', error);
+                    reportsTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--accent);">Error loading reports.</td></tr>`;
+                } finally {
+                    loader.classList.add('hidden');
+                }
+            }
+            
+            function applyFilters() {
+                const severity = document.getElementById('filterSeverity').value;
+                const type = document.getElementById('filterType').value;
+                const startDate = document.getElementById('filterDateStart').value;
+                const endDate = document.getElementById('filterDateEnd').value;
+                
+                const filteredReports = allReports.filter(report => {
+                    const reportDate = new Date(report.timestamp);
+                    const start = startDate ? new Date(startDate) : null;
+                    const end = endDate ? new Date(endDate) : null;
+
+                    if (end) end.setDate(end.getDate() + 1); // Include the whole end day
+
+                    return (!severity || report.severity === severity) &&
+                           (!type || report.incidentType === type) &&
+                           (!start || reportDate >= start) &&
+                           (!end || reportDate < end);
+                });
+                
+                displayReports(filteredReports);
             }
 
-            async function showDashboard(token) {
-                loginSection.style.display = 'none';
-                dashboardSection.style.display = 'block';
-                await fetchReports(token);
+            function displayReports(reports) {
+                reportsTableBody.innerHTML = '';
+                if (reports.length === 0) {
+                    reportsTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No reports match the current filters.</td></tr>`;
+                    return;
+                }
+                
+                reports.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                reports.forEach(report => {
+                    const row = document.createElement('tr');
+                    const location = report.address ? `${report.address.city || ''}, ${report.address.state || ''}`.replace(/^, |^,|, $/g, '') : 'N/A';
+                    row.innerHTML = `
+                        <td>${new Date(report.timestamp).toLocaleDateString()}</td>
+                        <td>${report.incidentType}</td>
+                        <td>${report.title}</td>
+                        <td class="severity-${report.severity}">${report.severity}</td>
+                        <td>${location}</td>
+                    `;
+                    reportsTableBody.appendChild(row);
+                });
+            }
+
+            function updateStats() {
+                document.getElementById('totalReports').textContent = allReports.length;
+                
+                const today = new Date().toDateString();
+                const reportsTodayCount = allReports.filter(r => new Date(r.timestamp).toDateString() === today).length;
+                document.getElementById('reportsToday').textContent = reportsTodayCount;
+
+                const severityOrder = ['low', 'medium', 'high', 'critical'];
+                let highestSev = 'N/A';
+                if (allReports.length > 0) {
+                    highestSev = allReports.reduce((max, r) => {
+                        return severityOrder.indexOf(r.severity) > severityOrder.indexOf(max) ? r.severity : max;
+                    }, 'low');
+                }
+                document.getElementById('highestSeverity').textContent = highestSev;
+
+                let mostCommon = 'N/A';
+                if (allReports.length > 0) {
+                    const typeCounts = allReports.reduce((acc, r) => {
+                        acc[r.incidentType] = (acc[r.incidentType] || 0) + 1;
+                        return acc;
+                    }, {});
+                    mostCommon = Object.keys(typeCounts).reduce((a, b) => typeCounts[a] > typeCounts[b] ? a : b);
+                }
+                document.getElementById('mostCommonType').textContent = mostCommon;
+            }
+            
+            function exportToCsv() {
+                const headers = ['Timestamp', 'Incident Type', 'Title', 'Description', 'Evidence', 'Severity', 'Street', 'City', 'State', 'Postal Code', 'Landmark'];
+                const rows = allReports.map(r => [
+                    r.timestamp,
+                    r.incidentType,
+                    `"${r.title.replace(/"/g, '""')}"`,
+                    `"${r.description.replace(/"/g, '""')}"`,
+                    `"${(r.evidence || '').replace(/"/g, '""')}"`,
+                    r.severity,
+                    r.address.street,
+                    r.address.city,
+                    r.address.state,
+                    r.address.postalCode,
+                    r.address.landmark
+                ].join(','));
+                
+                const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join('\\n');
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "reports.csv");
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
             }
 
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const password = document.getElementById('password').value;
+                const username = e.target.username.value;
+                const password = e.target.password.value;
                 try {
-                    const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+                    const response = await fetch(`${API_BASE_URL}/api/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ password })
+                        body: JSON.stringify({ username, password })
                     });
-                    const data = await response.json();
-                    if (response.ok && data.token) {
-                        localStorage.setItem('adminToken', data.token);
-                        showDashboard(data.token);
-                    } else {
-                        alert(data.error || 'Login failed');
-                    }
+                    if (!response.ok) throw new Error('Login failed');
+                    const { token } = await response.json();
+                    localStorage.setItem('adminToken', token);
+                    checkLogin();
                 } catch (error) {
-                    console.error('Login error:', error);
-                    alert('An error occurred during login.');
+                    alert('Invalid credentials');
                 }
             });
 
             logoutBtn.addEventListener('click', () => {
                 localStorage.removeItem('adminToken');
-                showLogin();
-            });
-
-            async function fetchReports(token) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/api/reports`, {
-                        headers: { 'x-admin-token': token }
-                    });
-
-                    if (!response.ok) {
-                        if (response.status === 401) {
-                            localStorage.removeItem('adminToken');
-                            showLogin();
-                        }
-                        throw new Error('Failed to fetch reports');
-                    }
-                    const reports = await response.json();
-                    displayReports(reports);
-                } catch (error) {
-                    console.error('Fetch reports error:', error);
-                    reportsGrid.innerHTML = '<p>Error loading reports.</p>';
-                }
-            }
-
-            function displayReports(reports) {
-                if (!reports || reports.length === 0) {
-                    reportsGrid.innerHTML = '<p>No reports found.</p>';
-                    return;
-                }
-                reportsGrid.innerHTML = reports.map(report => `
-                    <div class="report-card" data-id="${report.id}">
-                        <button class="delete-btn" data-id="${report.id}">Delete</button>
-                        <h3 class="report-title">${report.title}</h3>
-                        <p><strong>Type:</strong> ${report.incidentType}</p>
-                        <p><strong>Description:</strong> ${report.description}</p>
-                        <p><strong>Submitted:</strong> ${new Date(report.submittedAt).toLocaleString()}</p>
-                    </div>
-                `).join('');
-            }
-
-            reportsGrid.addEventListener('click', async (e) => {
-                if (e.target.classList.contains('delete-btn')) {
-                    const token = localStorage.getItem('adminToken');
-                    if (!token) return;
-
-                    const reportId = e.target.dataset.id;
-                    if (confirm(`Are you sure you want to delete report ${reportId}?`)) {
-                        try {
-                            const response = await fetch(`${API_BASE_URL}/api/report/${reportId}`, {
-                                method: 'DELETE',
-                                headers: { 'x-admin-token': token }
-                            });
-
-                            if (response.ok) {
-                                alert('Report deleted successfully.');
-                                fetchReports(token);
-                            } else {
-                                const data = await response.json();
-                                alert(data.error || 'Failed to delete report.');
-                            }
-                        } catch (error) {
-                            console.error('Delete error:', error);
-                            alert('An error occurred while deleting the report.');
-                        }
-                    }
-                }
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                allReports = [];
             });
             
+            document.getElementById('exportCsvBtn').addEventListener('click', exportToCsv);
+            ['filterSeverity', 'filterType', 'filterDateStart', 'filterDateEnd'].forEach(id => {
+                document.getElementById(id).addEventListener('change', applyFilters);
+            });
+
             checkLogin();
         });
     </script>
