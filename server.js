@@ -267,8 +267,9 @@ app.get('/api/health', (req, res) => {
 async function startServer() {
     await initializeReportsFile();
     
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
         console.log(`🚨 Anonymous Report Portal running on http://localhost:${PORT}`);
+        console.log(`   You can also access it on your local network.`);
         console.log(`📊 API endpoints:`);
         console.log(`   POST /api/report - Submit anonymous report`);
         console.log(`   GET  /api/reports - Get all reports (admin)`);
@@ -277,4 +278,4 @@ async function startServer() {
     });
 }
 
-startServer().catch(console.error); 
+startServer().catch(console.error);
