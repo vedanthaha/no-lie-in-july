@@ -1,3 +1,4 @@
+<!-- CACHE_BUSTER_FINAL_v1 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -263,14 +264,12 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        .form-group > input,
-        .form-group > textarea,
-        .form-group > select {
-            margin-bottom: 12px;
+        
+        /* This single rule correctly adds space between all form elements in a group */
+        .form-group > * + * {
+            margin-top: 10px;
         }
-        .form-group > *:last-child {
-            margin-bottom: 0;
-        }
+
         label {
             font-family: 'Montserrat', Arial, sans-serif;
             font-size: 1rem;
@@ -559,6 +558,9 @@
             .hero-title { 
                 font-size: 2.5rem;
                 line-height: 1.1;
+                letter-spacing: 0.04em; /* Reduced spacing */
+                word-break: normal; /* Prevent breaking words */
+                overflow-wrap: break-word; /* Wrap between words */
             }
             .hero-img { 
                 width: 220px; 
@@ -590,6 +592,7 @@
             .hero-title { 
                 font-size: 1.9rem;
                 line-height: 1.15;
+                letter-spacing: 0.03em; /* Further reduced spacing */
             }
             .hero-img { width: 180px; }
             .form-container { padding: 24px 16px; }
