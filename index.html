@@ -1,4 +1,4 @@
-<!-- CACHE_BUSTER_FINAL_v2 -->
+<!-- CACHE_BUSTER_FINAL_v3 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +69,7 @@
             text-decoration: none;
             font-weight: 400;
             margin-right: 32px;
+            white-space: nowrap;
         }
         .nav-link {
             font-family: 'Montserrat', Arial, sans-serif;
@@ -558,7 +559,27 @@
             }
         }
         
+        @media (max-width: 1024px) {
+            .nav-right .nav-social, .nav-right .nav-contact {
+                display: none;
+            }
+            .nav-inner {
+                padding: 0 20px;
+            }
+            .nav-logo {
+                font-size: 1.9rem;
+                margin-right: 24px;
+            }
+            .desktop-nav-links {
+                gap: 20px;
+            }
+        }
+
         @media (max-width: 900px) {
+            .nav-logo {
+                font-size: 1.8rem;
+                margin-right: 0;
+            }
             .hero-title { 
                 font-size: 2.5rem;
                 line-height: 1.1;
@@ -578,7 +599,7 @@
                 padding: 32px 24px; 
                 width: 90%;
             }
-            input, textarea, select {
+            input, textarea, select { /* Added responsive font size for form fields */
                 font-size: 0.95rem;
             }
             .nav-inner { padding: 0 10px; }
@@ -668,14 +689,6 @@
             cursor: pointer;
         }
 
-        @media (max-width: 1024px) {
-            .nav-right .nav-social, .nav-right .nav-contact {
-                display: none;
-            }
-            .nav-inner {
-                padding: 0 20px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1044,4 +1057,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
