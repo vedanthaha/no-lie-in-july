@@ -263,6 +263,9 @@
             flex-direction: column;
             align-items: flex-start;
         }
+        .form-group input + input {
+            margin-top: 8px;
+        }
         label {
             font-family: 'Montserrat', Arial, sans-serif;
             font-size: 1rem;
@@ -546,19 +549,39 @@
                 transform: translateY(-25px) scale(1.2);
             }
         }
-        
+
         @media (max-width: 900px) {
-            .hero-title { font-size: 2.5rem; }
-            .hero-img { width: 220px; }
-            .form-container { padding: 32px 10px; }
+            .hero-title { 
+                font-size: 2.8rem;
+                line-height: 1.05;
+            }
+            .hero-img { 
+                width: 220px; 
+                margin-bottom: 1.5em;
+            }
+            .hero-desc {
+                font-size: 1.1rem;
+                max-width: 90%;
+            }
+            .form-container { 
+                padding: 32px 24px; 
+                width: 90%;
+            }
             .nav-inner { padding: 0 10px; }
             .myfm-car { width: 80px; height: 40px; }
             .myfm-text { font-size: 2rem; }
+            .desktop-nav-links, .nav-right {
+                display: none;
+            }
+            #hamburger-menu {
+                display: block;
+            }
         }
+
         @media (max-width: 600px) {
-            .hero-title { font-size: 1.5rem; }
-            .hero-img { width: 120px; }
-            .form-container { padding: 16px 2vw; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-img { width: 180px; }
+            .form-container { padding: 24px 16px; }
             .footer { font-size: 0.9rem; }
             .myfm-car { width: 60px; height: 30px; }
             .myfm-text { font-size: 1.5rem; }
@@ -633,26 +656,6 @@
             }
             .nav-inner {
                 padding: 0 20px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .desktop-nav-links, .nav-right {
-                display: none;
-            }
-            #hamburger-menu {
-                display: block;
-            }
-            .hero-desc {
-                font-size: 1.1rem;
-                max-width: 90%;
-                margin-bottom: 2rem;
-            }
-            .hero-img {
-                margin-bottom: 1.5em;
-            }
-            .hero-title {
-                line-height: 1.05;
             }
         }
     </style>
@@ -763,15 +766,15 @@
             <div class="form-group">
                 <label>Location Where Incident Occured <span class="required">*</span></label>
                 <input type="text" id="streetAddress" placeholder="Street Address">
-                <input type="text" id="city" placeholder="City" style="margin-top:8px;">
-                <input type="text" id="state" placeholder="State/Province" style="margin-top:8px;">
-                <input type="text" id="postalCode" placeholder="Postal Code" style="margin-top:8px;">
-                <input type="text" id="landmark" placeholder="Nearby Landmark" style="margin-top:8px;">
+                <input type="text" id="city" placeholder="City">
+                <input type="text" id="state" placeholder="State/Province">
+                <input type="text" id="postalCode" placeholder="Postal Code">
+                <input type="text" id="landmark" placeholder="Nearby Landmark">
             </div>
             <div class="form-group">
                 <label>Time Information <span class="optional">(Optional)</span></label>
                 <input type="date" id="incidentDate" name="date">
-                <input type="time" id="incidentTime" name="time" style="margin-top:8px;">
+                <input type="time" id="incidentTime" name="time">
             </div>
             <div class="form-group">
                 <label for="severity">Severity Level <span class="required">*</span></label>
