@@ -263,9 +263,22 @@
             flex-direction: column;
             align-items: flex-start;
         }
-        .form-group input + input {
-            margin-top: 8px;
+        
+        /* 
+          This new set of rules replaces the old, broken one.
+          It adds a bottom margin to every input/select/textarea in a group,
+          but removes it from the very last one to prevent extra space.
+        */
+        .form-group > input,
+        .form-group > textarea,
+        .form-group > select {
+            margin-bottom: 12px;
         }
+
+        .form-group > *:last-child {
+            margin-bottom: 0;
+        }
+
         label {
             font-family: 'Montserrat', Arial, sans-serif;
             font-size: 1rem;
@@ -283,7 +296,7 @@
             color: #222;
             font-size: 1rem;
             font-family: inherit;
-            margin-bottom: 0.2em;
+            margin-bottom: 0; /* Let .form-group control the spacing */
             transition: border 0.2s, box-shadow 0.2s;
         }
         input:focus, textarea:focus, select:focus {
@@ -552,8 +565,8 @@
         
         @media (max-width: 900px) {
             .hero-title { 
-                font-size: 2.8rem;
-                line-height: 1.05;
+                font-size: 2.5rem; /* Reduced font size */
+                line-height: 1.1;
             }
             .hero-img { 
                 width: 220px; 
@@ -567,6 +580,9 @@
                 padding: 32px 24px; 
                 width: 90%;
             }
+            input, textarea, select { /* Added responsive font size for form fields */
+                font-size: 0.95rem;
+            }
             .nav-inner { padding: 0 10px; }
             .myfm-car { width: 80px; height: 40px; }
             .myfm-text { font-size: 2rem; }
@@ -579,7 +595,10 @@
         }
 
         @media (max-width: 600px) {
-            .hero-title { font-size: 2.2rem; }
+            .hero-title { 
+                font-size: 1.9rem; /* Further reduced font size */
+                line-height: 1.15;
+            }
             .hero-img { width: 180px; }
             .form-container { padding: 24px 16px; }
             .footer { font-size: 0.9rem; }
@@ -714,7 +733,7 @@
     <section class="hero" id="home">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1 class="hero-title">KYA TUJHPE BHI HUYA HAI JHUT KA ATTACK?<br><span class="highlight">JOH BOL NAHI PAAYE WO TYPE KARDO</span></h1>
+            <h1 class="hero-title">KYA TUJHPE BHI HUYA HAI JHUT KA ATTACK? <span class="highlight">JOH BOL NAHI PAAYE WO TYPE KARDO</span></h1>
             <img src="shhh.png" alt="Shhh Statue" class="hero-img" />
             <div class="hero-desc">Pure, honest and <span class="highlight">damn important</span>.<br>Report scams, thefts, or any incident <b>100% anonymously</b>.</div>
         </div>
@@ -1026,4 +1045,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
