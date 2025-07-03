@@ -136,12 +136,6 @@
             font-weight: 600;
             cursor: pointer;
         }
-        
-        .error-message {
-            color: #ff8a8a;
-            margin-top: 1rem;
-            font-weight: 500;
-        }
 
         /* Stats section */
         .stats-section {
@@ -256,98 +250,95 @@
 
         .reports-table th {
             font-weight: 600;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
+        }
+        
+        .reports-table tr:hover {
+            background: var(--bg-tertiary);
         }
         
         .reports-table td {
             font-size: 0.95rem;
         }
         
-        .reports-table tr:hover {
-            background: var(--bg-tertiary);
+        .severity-high, .severity-critical {
+            font-weight: 600;
+            color: var(--accent);
         }
 
-        .action-cell {
+        /* Loader */
+        .loader {
             text-align: center;
+            padding: 3rem;
         }
 
-        .delete-btn {
-            background: #4d2323;
-            color: #ff8a8a;
-            border: 1px solid #ff8a8a;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .modal {
+        /* Hidden class */
+        .hidden {
             display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
-        }
-        
-        .modal-content {
-            background-color: var(--bg-secondary);
-            margin: 10% auto;
-            padding: 2rem;
-            border: 1px solid var(--border-primary);
-            width: 90%;
-            max-width: 600px;
-            border-radius: 16px;
         }
 
-        .modal-content h3 {
-            margin-bottom: 1rem;
+        /* Add some extra modern table design tweaks */
+        .reports-table th, .reports-table td {
+            border-bottom: 1.5px solid var(--accent-dark);
+            background: rgba(255,255,255,0.01);
+            font-size: 0.98rem;
+            padding: 14px 10px;
         }
-        .modal-content p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
+        .reports-table th {
+            background: linear-gradient(90deg, var(--accent) 60%, var(--accent-dark) 100%);
+            color: #222;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 1px 4px #fffbe7cc;
         }
-
-        .close-button {
-            color: var(--text-secondary);
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .reports-table tr:hover td {
+            background: #e6a9c622;
+            color: var(--accent-dark);
+        }
+        .delete-btn {
+            background: var(--accent-dark);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-weight: 600;
             cursor: pointer;
+            transition: background 0.2s;
         }
-
-        @media screen and (max-width: 768px) {
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
+        .delete-btn:hover {
+            background: #a85b8a;
         }
     </style>
 </head>
 <body>
-
-    <section id="loginSection" class="login-section">
-        <div class="login-form-container">
-            <h2>Admin Login</h2>
-            <form id="loginForm">
-                <input type="password" id="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p id="loginError" class="error-message" style="display:none;"></p>
+    <div id="loginSection">
+        <div class="header">
+            <div class="container header-content">
+                <h1 class="title">Admin Login</h1>
+                <p class="subtitle">No Lie In July</p>
+            </div>
         </div>
-    </section>
+        <main class="main-content">
+            <div class="login-section">
+                <div class="login-form-container">
+                    <h2>Admin Login</h2>
+                    <form id="loginForm">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                    <p id="loginError" class="error-message" style="display:none;"></p>
+                </div>
+            </div>
+        </main>
+    </div>
 
-    <div id="dashboardSection" class="dashboard-section" style="display:none;">
+    <div id="dashboardSection" class="hidden">
         <header class="header">
             <div class="container header-content">
-                <div>
-                    <h1 class="title">Admin Dashboard</h1>
-                    <p class="subtitle">Anonymous Report Management</p>
-                </div>
+                <h1 class="title">Admin Dashboard</h1>
+                <p class="subtitle">Welcome back. Here are the latest reports.</p>
                 <button id="logoutBtn">Logout</button>
             </div>
         </header>
@@ -361,8 +352,12 @@
                             <div class="stat-label">Total Reports</div>
                         </div>
                         <div class="stat-card">
-                            <div id="recentReports" class="stat-number">0</div>
-                            <div class="stat-label">Last 7 Days</div>
+                            <div id="reportsToday" class="stat-number">0</div>
+                            <div class="stat-label">Reports Today</div>
+                        </div>
+                        <div class="stat-card">
+                            <div id="highestSeverity" class="stat-number">N/A</div>
+                            <div class="stat-label">Highest Severity</div>
                         </div>
                         <div class="stat-card">
                             <div id="mostCommonType" class="stat-number">N/A</div>
@@ -370,89 +365,230 @@
                         </div>
                     </div>
                 </section>
-                
-                <section id="filtersCard" class="card">
-                    <h2 class="card-title">Filter & Search Reports</h2>
+
+                <section class="filters-section card">
+                    <h2 class="card-title">Filters</h2>
                     <div class="filters-grid">
                         <div class="filter-group">
-                            <label for="typeFilter">Incident Type</label>
-                            <select id="typeFilter">
-                                <option value="">All Types</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label for="severityFilter">Severity</label>
-                            <select id="severityFilter">
-                                <option value="">All Severities</option>
+                            <label for="filterSeverity">Severity</label>
+                            <select id="filterSeverity">
+                                <option value="">All</option>
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
                                 <option value="high">High</option>
+                                <option value="critical">Critical</option>
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label for="dateFilter">Date Range</label>
-                            <input type="date" id="dateFilter">
+                            <label for="filterType">Incident Type</label>
+                            <select id="filterType">
+                                <option value="">All</option>
+                                <option value="petrol-station-scam">Petrol Station Scam</option>
+                                <option value="theft">Theft</option>
+                                <option value="fraud">Fraud</option>
+                                <option value="corruption">Corruption</option>
+                                <option value="safety-hazard">Safety Hazard</option>
+                                <option value="traffic-violation">Traffic Violation</option>
+                                <option value="environmental-issue">Environmental Issue</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
                         <div class="filter-group">
-                            <label for="searchFilter">Search Query</label>
-                            <input type="text" id="searchFilter" placeholder="Search title or description...">
+                            <label for="filterDateStart">Start Date</label>
+                            <input type="date" id="filterDateStart">
+                        </div>
+                        <div class="filter-group">
+                            <label for="filterDateEnd">End Date</label>
+                            <input type="date" id="filterDateEnd">
                         </div>
                     </div>
                 </section>
 
-                <section id="reportsCard" class="card">
+                <section class="reports-section card">
                     <div class="reports-header">
                         <h2 class="card-title">All Reports</h2>
                         <button id="exportCsvBtn" class="export-btn">Export to CSV</button>
                     </div>
                     <div class="table-wrapper">
-                        <table class="reports-table">
+                        <table class="reports-table" id="reportsTable">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Contact Number</th>
+                                    <th>Incident Type</th>
                                     <th>Title</th>
-                                    <th>Submitted</th>
+                                    <th>Description</th>
+                                    <th>Evidence</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
                                     <th>Severity</th>
-                                    <th class="action-cell">Actions</th>
+                                    <th>Submitted At</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Reports will be populated here -->
+                                <!-- Reports will be dynamically inserted here -->
                             </tbody>
                         </table>
                     </div>
+                    <div id="loader" class="loader">Loading reports...</div>
                 </section>
             </div>
         </main>
     </div>
-
-    <div id="reportModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <div id="modalBody"></div>
-        </div>
-    </div>
-
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loginSection = document.getElementById('loginSection');
             const dashboardSection = document.getElementById('dashboardSection');
             const loginForm = document.getElementById('loginForm');
             const logoutBtn = document.getElementById('logoutBtn');
-            const reportsTableBody = document.querySelector('#reportsTable tbody');
+            const reportsTableBody = document.getElementById('reportsTableBody');
+            const loader = document.getElementById('loader');
             const loginError = document.getElementById('loginError');
-
-            const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://no-lie-in-july.onrender.com';
+            
+            const API_BASE_URL = '';
+            let allReports = [];
 
             function checkLogin() {
                 const token = localStorage.getItem('adminToken');
                 if (token) {
-                    showDashboard();
-                } else {
-                    showLogin();
+                    loginSection.classList.add('hidden');
+                    dashboardSection.classList.remove('hidden');
+                    fetchReports(token);
                 }
+            }
+
+            async function fetchReports(token) {
+                loader.classList.remove('hidden');
+                reportsTableBody.innerHTML = '';
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/reports`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            logout();
+                        }
+                        throw new Error('Failed to fetch reports');
+                    }
+                    allReports = await response.json();
+                    applyFilters();
+                    updateStats();
+                } catch (error) {
+                    console.error('Error fetching reports:', error);
+                    reportsTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--accent);">Error loading reports.</td></tr>`;
+                } finally {
+                    loader.classList.add('hidden');
+                }
+            }
+            
+            function applyFilters() {
+                const severity = document.getElementById('filterSeverity').value;
+                const type = document.getElementById('filterType').value;
+                const startDate = document.getElementById('filterDateStart').value;
+                const endDate = document.getElementById('filterDateEnd').value;
+                
+                const filteredReports = allReports.filter(report => {
+                    const reportDate = new Date(report.timestamp);
+                    const start = startDate ? new Date(startDate) : null;
+                    const end = endDate ? new Date(endDate) : null;
+
+                    if (end) end.setDate(end.getDate() + 1); // Include the whole end day
+
+                    return (!severity || report.severity === severity) &&
+                           (!type || report.incidentType === type) &&
+                           (!start || reportDate >= start) &&
+                           (!end || reportDate < end);
+                });
+                
+                displayReports(filteredReports);
+            }
+
+            function displayReports(reports) {
+                reportsTableBody.innerHTML = '';
+                if (reports.length === 0) {
+                    reportsTableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No reports match the current filters.</td></tr>`;
+                    return;
+                }
+                
+                reports.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                reports.forEach(report => {
+                    const row = document.createElement('tr');
+                    const location = report.address ? `${report.address.city || ''}, ${report.address.state || ''}`.replace(/^, |^,|, $/g, '') : 'N/A';
+                    row.innerHTML = `
+                        <td>${report.id}</td>
+                        <td>${report.reporterName || ''}</td>
+                        <td>${report.contactNumber || ''}</td>
+                        <td>${report.incidentType}</td>
+                        <td>${report.title}</td>
+                        <td>${report.description}</td>
+                        <td>${report.evidence}</td>
+                        <td>${location}</td>
+                        <td>${new Date(report.timestamp).toLocaleDateString()}</td>
+                        <td>${new Date(report.timestamp).toLocaleTimeString()}</td>
+                        <td class="severity-${report.severity}">${report.severity}</td>
+                        <td>${new Date(report.submittedAt).toLocaleString()}</td>
+                        <td><button class="delete-btn" data-id="${report.id}">Delete</button></td>
+                    `;
+                    reportsTableBody.appendChild(row);
+                });
+            }
+
+            function updateStats() {
+                document.getElementById('totalReports').textContent = allReports.length;
+                
+                const today = new Date().toDateString();
+                const reportsTodayCount = allReports.filter(r => new Date(r.timestamp).toDateString() === today).length;
+                document.getElementById('reportsToday').textContent = reportsTodayCount;
+
+                const severityOrder = ['low', 'medium', 'high', 'critical'];
+                let highestSev = 'N/A';
+                if (allReports.length > 0) {
+                    highestSev = allReports.reduce((max, r) => {
+                        return severityOrder.indexOf(r.severity) > severityOrder.indexOf(max) ? r.severity : max;
+                    }, 'low');
+                }
+                document.getElementById('highestSeverity').textContent = highestSev;
+
+                let mostCommon = 'N/A';
+                if (allReports.length > 0) {
+                    const typeCounts = allReports.reduce((acc, r) => {
+                        acc[r.incidentType] = (acc[r.incidentType] || 0) + 1;
+                        return acc;
+                    }, {});
+                    mostCommon = Object.keys(typeCounts).reduce((a, b) => typeCounts[a] > typeCounts[b] ? a : b);
+                }
+                document.getElementById('mostCommonType').textContent = mostCommon;
+            }
+            
+            function exportToCsv() {
+                const headers = ['Timestamp', 'Incident Type', 'Title', 'Description', 'Evidence', 'Severity', 'Street', 'City', 'State', 'Postal Code', 'Landmark'];
+                const rows = allReports.map(r => [
+                    r.timestamp,
+                    r.incidentType,
+                    `"${r.title.replace(/"/g, '""')}"`,
+                    `"${r.description.replace(/"/g, '""')}"`,
+                    `"${(r.evidence || '').replace(/"/g, '""')}"`,
+                    r.severity,
+                    r.address.street,
+                    r.address.city,
+                    r.address.state,
+                    r.address.postalCode,
+                    r.address.landmark
+                ].join(','));
+                
+                const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows].join('\\n');
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "reports.csv");
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
             }
 
             loginForm.addEventListener('submit', async (e) => {
@@ -487,225 +623,16 @@
 
             logoutBtn.addEventListener('click', () => {
                 localStorage.removeItem('adminToken');
-                showLogin();
+                loginSection.classList.remove('hidden');
+                dashboardSection.classList.add('hidden');
+                allReports = [];
             });
             
-            function showLogin() {
-                loginSection.style.display = 'flex';
-                dashboardSection.style.display = 'none';
-            }
-
-            function showDashboard() {
-                loginSection.style.display = 'none';
-                dashboardSection.style.display = 'block';
-                fetchAndDisplayReports();
-                fetchAndDisplayStats();
-            }
-
-            async function fetchWithAuth(url, options = {}) {
-                const token = localStorage.getItem('adminToken');
-                const headers = {
-                    ...options.headers,
-                    'x-admin-token': token
-                };
-                const response = await fetch(url, { ...options, headers });
-
-                if (!response.ok) {
-                    if (response.status === 401) {
-                        // Unauthorized, likely bad token
-                        logoutBtn.click();
-                    }
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            }
-
-            async function fetchAndDisplayStats() {
-                try {
-                    const reports = await fetchWithAuth(`${API_BASE_URL}/api/reports`);
-                    
-                    const totalReportsEl = document.getElementById('totalReports');
-                    const recentReportsEl = document.getElementById('recentReports');
-                    const mostCommonTypeEl = document.getElementById('mostCommonType');
-                    
-                    totalReportsEl.textContent = reports.length;
-
-                    const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-                    const recentCount = reports.filter(r => new Date(r.timestamp) > weekAgo).length;
-                    recentReportsEl.textContent = recentCount;
-                    
-                    if (reports.length > 0) {
-                        const typeCounts = reports.reduce((acc, report) => {
-                            acc[report.incidentType] = (acc[report.incidentType] || 0) + 1;
-                            return acc;
-                        }, {});
-
-                        const mostCommon = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
-                        mostCommonTypeEl.textContent = mostCommon ? mostCommon[0] : 'N/A';
-                    } else {
-                        mostCommonTypeEl.textContent = 'N/A';
-                    }
-
-                } catch (error) {
-                    console.error('Failed to fetch stats:', error);
-                }
-            }
-            
-            let allReports = [];
-            
-            async function fetchAndDisplayReports() {
-                try {
-                    allReports = await fetchWithAuth(`${API_BASE_URL}/api/reports`);
-                    populateTypeFilter(allReports);
-                    renderReports(allReports);
-                } catch (error) {
-                    console.error('Failed to fetch reports:', error);
-                }
-            }
-            
-            function populateTypeFilter(reports) {
-                const typeFilter = document.getElementById('typeFilter');
-                const types = [...new Set(reports.map(r => r.incidentType))];
-                typeFilter.innerHTML = '<option value="">All Types</option>'; // Reset
-                types.forEach(type => {
-                    const option = document.createElement('option');
-                    option.value = type;
-                    option.textContent = type;
-                    typeFilter.appendChild(option);
-                });
-            }
-
-            function renderReports(reports) {
-                const tableBody = document.querySelector('.reports-table tbody');
-                tableBody.innerHTML = ''; // Clear table
-
-                if (reports.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No reports found.</td></tr>';
-                    return;
-                }
-                
-                reports.forEach(report => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${report.id.substring(0, 12)}...</td>
-                        <td>${report.incidentType}</td>
-                        <td>${report.title}</td>
-                        <td>${new Date(report.timestamp).toLocaleString()}</td>
-                        <td>${report.severity}</td>
-                        <td class="action-cell">
-                            <button class="view-btn" data-id="${report.id}">View</button>
-                            <button class="delete-btn" data-id="${report.id}">Delete</button>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            function applyFilters() {
-                const type = document.getElementById('typeFilter').value;
-                const severity = document.getElementById('severityFilter').value;
-                const date = document.getElementById('dateFilter').value;
-                const search = document.getElementById('searchFilter').value.toLowerCase();
-
-                let filteredReports = allReports;
-
-                if (type) {
-                    filteredReports = filteredReports.filter(r => r.incidentType === type);
-                }
-                if (severity) {
-                    filteredReports = filteredReports.filter(r => r.severity === severity);
-                }
-                if (date) {
-                    filteredReports = filteredReports.filter(r => r.timestamp.startsWith(date));
-                }
-                if (search) {
-                    filteredReports = filteredReports.filter(r => 
-                        r.title.toLowerCase().includes(search) ||
-                        r.description.toLowerCase().includes(search)
-                    );
-                }
-                
-                renderReports(filteredReports);
-            }
-            
-            // Event listeners for filters
-            ['typeFilter', 'severityFilter', 'dateFilter'].forEach(id => {
+            document.getElementById('exportCsvBtn').addEventListener('click', exportToCsv);
+            ['filterSeverity', 'filterType', 'filterDateStart', 'filterDateEnd'].forEach(id => {
                 document.getElementById(id).addEventListener('change', applyFilters);
             });
-            document.getElementById('searchFilter').addEventListener('input', applyFilters);
-            
-            // Modal Logic
-            const modal = document.getElementById('reportModal');
-            const modalBody = document.getElementById('modalBody');
-            const closeBtn = document.querySelector('.modal .close-button');
 
-            document.querySelector('.reports-table tbody').addEventListener('click', async (e) => {
-                if (e.target.classList.contains('view-btn')) {
-                    const reportId = e.target.dataset.id;
-                    const report = allReports.find(r => r.id === reportId);
-                    if (report) {
-                        modalBody.innerHTML = `
-                            <h3>Report Details: ${report.id}</h3>
-                            <p><strong>Type:</strong> ${report.incidentType}</p>
-                            <p><strong>Title:</strong> ${report.title}</p>
-                            <p><strong>Description:</strong> ${report.description}</p>
-                            <p><strong>Severity:</strong> ${report.severity}</p>
-                            <p><strong>Submitted:</strong> ${new Date(report.timestamp).toLocaleString()}</p>
-                            <p><strong>Address:</strong> ${report.address.city || ''}, ${report.address.state || ''}</p>
-                            <p><strong>Evidence Link:</strong> <a href="${report.evidence}" target="_blank">${report.evidence}</a></p>
-                        `;
-                        modal.style.display = 'block';
-                    }
-                } else if (e.target.classList.contains('delete-btn')) {
-                    const reportId = e.target.dataset.id;
-                    if (confirm(`Are you sure you want to delete report ${reportId}?`)) {
-                        try {
-                            await fetchWithAuth(`${API_BASE_URL}/api/report/${reportId}`, { method: 'DELETE' });
-                            fetchAndDisplayReports(); // Refresh list
-                        } catch (error) {
-                            console.error('Failed to delete report:', error);
-                            alert('Failed to delete report.');
-                        }
-                    }
-                }
-            });
-
-            closeBtn.onclick = () => modal.style.display = "none";
-            window.onclick = (event) => {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-            
-            // Export to CSV
-            document.getElementById('exportCsvBtn').addEventListener('click', () => {
-                const headers = ['ID', 'Incident Type', 'Title', 'Description', 'Severity', 'Submitted At', 'Evidence', 'City', 'State'];
-                const rows = allReports.map(r => [
-                    r.id,
-                    r.incidentType,
-                    r.title,
-                    `"${r.description.replace(/"/g, '""')}"`,
-                    r.severity,
-                    new Date(r.timestamp).toISOString(),
-                    r.evidence,
-                    r.address.city,
-                    r.address.state
-                ]);
-
-                let csvContent = "data:text/csv;charset=utf-8," 
-                    + headers.join(",") + "\n" 
-                    + rows.map(e => e.join(",")).join("\n");
-                
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "reports.csv");
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-
-            // Initial load
             checkLogin();
         });
     </script>
