@@ -449,7 +449,9 @@
             const loader = document.getElementById('loader');
             const loginError = document.getElementById('loginError');
             
-            const API_BASE_URL = '';
+    const API_BASE_URL = window.location.hostname === 'localhost'
+     ? 'http://localhost:3000'
+     : 'https://no-lie-in-july.onrender.com';
             let allReports = [];
 
             function checkLogin() {
