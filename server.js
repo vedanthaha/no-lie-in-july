@@ -86,13 +86,15 @@ app.post('/api/report', async (req, res) => {
             address, 
             incidentDate, 
             incidentTime, 
-            severity 
+            severity,
+            reporterName,
+            contactNumber
         } = req.body;
 
         // Validate required fields
-        if (!incidentType || !title || !description) {
+        if (!incidentType || !title || !description || !reporterName || !contactNumber) {
             return res.status(400).json({ 
-                error: 'Incident type, title, and description are required' 
+                error: 'Incident type, title, description, name, and contact number are required' 
             });
         }
 
@@ -107,8 +109,9 @@ app.post('/api/report', async (req, res) => {
             incidentDate: incidentDate || '',
             incidentTime: incidentTime || '',
             severity: severity || '',
+            reporterName,
+            contactNumber,
             submittedAt: new Date().toISOString(),
-            // No personal information stored
             ipAddress: req.ip,
             userAgent: req.get('User-Agent')
         };
@@ -154,6 +157,8 @@ app.get('/api/reports', adminAuth, async (req, res) => {
             incidentDate: report.incidentDate || '',
             incidentTime: report.incidentTime || '',
             severity: report.severity || 'medium',
+            reporterName: report.reporterName || '',
+            contactNumber: report.contactNumber || '',
             submittedAt: report.submittedAt,
             timestamp: report.submittedAt // For compatibility with existing admin code
         }));
@@ -270,7 +275,7 @@ async function startServer() {
     app.listen(PORT, '0.0.0.0', () => {
         console.log(`🚨 Anonymous Report Portal running on http://localhost:${PORT}`);
         console.log(`   You can also access it on your local network.`);
-        console.log(`📊 API endpoints:`);
+        console.log(`�� API endpoints:`);
         console.log(`   POST /api/report - Submit anonymous report`);
         console.log(`   GET  /api/reports - Get all reports (admin)`);
         console.log(`   GET  /api/stats - Get report statistics`);
@@ -278,4 +283,4 @@ async function startServer() {
     });
 }
 
-startServer().catch(console.error);
+startServer().catch(console.error); 
