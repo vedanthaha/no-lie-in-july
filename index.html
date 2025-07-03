@@ -234,9 +234,10 @@
             justify-content: center;
         }
         .form-container {
-            background: #fffbe7ee;
-            border-radius: 18px;
-            box-shadow: 0 8px 32px #0002;
+            box-shadow: 0 12px 40px #0003, 0 1.5px 8px #e6a9c655;
+            border: 2.5px solid var(--accent-dark);
+            background: linear-gradient(135deg, #fffbe7ee 60%, #e6a9c6 100%);
+            animation: popIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
             padding: 48px 36px 36px 36px;
             max-width: 480px;
             width: 100%;
@@ -244,7 +245,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            border: 2px solid var(--accent);
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(40px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
         .form-title {
             font-family: 'Bebas Neue', Arial, sans-serif;
@@ -305,24 +309,26 @@
             resize: vertical;
         }
         .submit-btn {
+            background: linear-gradient(90deg, var(--accent) 60%, var(--accent-dark) 100%);
+            color: #222;
+            font-size: 1.15rem;
+            letter-spacing: 2.5px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #e6a9c655;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
             width: 100%;
             padding: 16px;
-            background: var(--accent);
-            color: #222;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
             font-family: 'Montserrat', Arial, sans-serif;
             font-weight: 700;
-            letter-spacing: 2px;
             text-transform: uppercase;
             cursor: pointer;
             margin-top: 1em;
-            transition: background 0.2s, color 0.2s;
         }
         .submit-btn:hover {
-            background: var(--accent-dark);
+            background: linear-gradient(90deg, var(--accent-dark) 60%, var(--accent) 100%);
             color: #fff;
+            box-shadow: 0 4px 16px #c97ba655;
         }
         .optional {
             color: #888;
@@ -559,27 +565,7 @@
             }
         }
         
-        @media (max-width: 1024px) {
-            .nav-right .nav-social, .nav-right .nav-contact {
-                display: none;
-            }
-            .nav-inner {
-                padding: 0 20px;
-            }
-            .nav-logo {
-                font-size: 1.9rem;
-                margin-right: 24px;
-            }
-            .desktop-nav-links {
-                gap: 20px;
-            }
-        }
-
         @media (max-width: 900px) {
-            .nav-logo {
-                font-size: 1.8rem;
-                margin-right: 0;
-            }
             .hero-title { 
                 font-size: 2.5rem;
                 line-height: 1.1;
@@ -599,7 +585,7 @@
                 padding: 32px 24px; 
                 width: 90%;
             }
-            input, textarea, select { /* Added responsive font size for form fields */
+            input, textarea, select {
                 font-size: 0.95rem;
             }
             .nav-inner { padding: 0 10px; }
@@ -610,6 +596,10 @@
             }
             #hamburger-menu {
                 display: block;
+            }
+            .nav-logo {
+                font-size: 1.8rem;
+                margin-right: 0;
             }
         }
 
@@ -689,6 +679,29 @@
             cursor: pointer;
         }
 
+        @media (max-width: 1024px) {
+            .nav-right .nav-social, .nav-right .nav-contact {
+                display: none;
+            }
+            .nav-inner {
+                padding: 0 20px;
+            }
+            .nav-logo {
+                font-size: 1.9rem;
+                margin-right: 24px;
+            }
+            .desktop-nav-links {
+                gap: 20px;
+            }
+        }
+
+        input:required, textarea:required, select:required {
+            border-color: var(--accent-dark);
+            background: #fff;
+        }
+        input:required:focus, textarea:required:focus, select:required:focus {
+            box-shadow: 0 0 0 2px #c97ba6aa;
+        }
     </style>
 </head>
 <body>
@@ -746,7 +759,6 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
             <h1 class="hero-title">KYA TUJHPE BHI HUYA HAI JHUT KA ATTACK? <span class="highlight">JOH BOL NAHI PAAYE WO TYPE KARDO</span></h1>
-            <img src="shhh.png" alt="Shhh Statue" class="hero-img" />
             <div class="hero-desc">Pure, honest and <span class="highlight">damn important</span>.<br>Report scams, thefts, or any incident <b>100% anonymously</b>.</div>
         </div>
         <div class="scroll-indicator">
@@ -768,6 +780,14 @@
         <form class="form-container" id="reportForm">
             <div class="form-title">Submit Anonymous Report</div>
             <div class="form-description">Your identity will remain completely anonymous. Help us make our community safer.</div>
+            <div class="form-group">
+                <label for="reporterName">Name <span class="required">*</span></label>
+                <input type="text" id="reporterName" name="reporterName" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <label for="contactNumber">Contact Number <span class="required">*</span></label>
+                <input type="tel" id="contactNumber" name="contactNumber" placeholder="Your contact number" required pattern="[0-9]{10,15}" title="Please enter a valid contact number (10-15 digits)">
+            </div>
             <div class="form-group">
                 <label for="incidentType">Incident Type <span class="required">*</span></label>
                 <select id="incidentType" name="incidentType" required>
@@ -934,6 +954,8 @@
                 title: document.getElementById('reportTitle').value,
                 description: document.getElementById('description').value,
                 evidence: document.getElementById('evidence').value,
+                reporterName: document.getElementById('reporterName').value,
+                contactNumber: document.getElementById('contactNumber').value,
                 address: {
                     street: document.getElementById('streetAddress').value,
                     city: document.getElementById('city').value,
@@ -1057,4 +1079,4 @@
         }
     </script>
 </body>
-</html>
+</html> 
