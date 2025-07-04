@@ -601,6 +601,25 @@
                 font-size: 1.8rem;
                 margin-right: 0;
             }
+            .mobile-menu-content .nav-social {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .mobile-menu-content .nav-social a:not([aria-label="Instagram"]) {
+                display: none !important;
+            }
+            .mobile-menu-content .nav-social {
+                margin-top: 24px;
+            }
+            .mobile-menu-content .nav-contact {
+                display: flex !important;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1.1em;
+                color: var(--accent);
+                text-decoration: none;
+                margin-top: 8px;
+            }
         }
 
         @media (max-width: 600px) {
@@ -716,7 +735,7 @@
             <button class="nav-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'}); document.getElementById('mobile-menu-overlay').style.display='none';">Submit Report</button>
             <div class="nav-social">
                 <a href="https://www.instagram.com/rj.krishii?igsh=b2gxbjBoNzFrZ2x3" target="_blank" rel="noopener" aria-label="Instagram">
-                    <svg width="24" height="24" viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="28" height="28" viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="448" height="512" rx="120" fill="url(#ig-gradient)"/>
                         <defs>
                             <linearGradient id="ig-gradient" x1="0" y1="0" x2="1" y2="1">
@@ -730,8 +749,6 @@
                         <rect x="80" y="80" width="288" height="288" rx="80" stroke="#fff" stroke-width="32" fill="none"/>
                     </svg>
                 </a>
-                <a href="#"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.5c0-1.104-.896-2-2-2s-2 .896-2 2v4.5h-3v-9h3v1.268c.591-.859 1.591-1.268 2.5-1.268 1.933 0 3.5 1.567 3.5 3.5v5.5z"/></svg></a>
-                <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.351c0 .733.592 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.672c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.733 0 1.325-.591 1.325-1.324v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg></a>
             </div>
         </div>
     </div>
@@ -749,7 +766,7 @@
             <div class="nav-right">
                 <div class="nav-social">
                     <a href="https://www.instagram.com/rj.krishii?igsh=b2gxbjBoNzFrZ2x3" target="_blank" rel="noopener" aria-label="Instagram">
-                        <svg width="24" height="24" viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="28" height="28" viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="448" height="512" rx="120" fill="url(#ig-gradient)"/>
                             <defs>
                                 <linearGradient id="ig-gradient" x1="0" y1="0" x2="1" y2="1">
@@ -763,17 +780,15 @@
                             <rect x="80" y="80" width="288" height="288" rx="80" stroke="#fff" stroke-width="32" fill="none"/>
                         </svg>
                     </a>
-                    <a href="#"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 10.268h-3v-4.5c0-1.104-.896-2-2-2s-2 .896-2 2v4.5h-3v-9h3v1.268c.591-.859 1.591-1.268 2.5-1.268 1.933 0 3.5 1.567 3.5 3.5v5.5z"/></svg></a>
-                    <a href="#"><svg viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.733 0-1.325.592-1.325 1.325v21.351c0 .733.592 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.672c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12v9.294h6.116c.733 0 1.325-.591 1.325-1.324v-21.35c0-.733-.592-1.325-1.325-1.325z"/></svg></a>
+                    <a href="tel:7770943943" class="nav-contact" style="display:flex;align-items:center;gap:0.5rem;color:var(--headline);text-decoration:none;font-size:1.1em;opacity:0.9;margin-right:0;">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                            <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
+                            <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
+                        </svg>
+                        +91 7770943943
+                    </a>
                 </div>
-                <a href="tel:7770943943" class="nav-contact" style="display:flex;align-items:center;gap:0.5rem;color:var(--headline);text-decoration:none;font-size:0.9rem;opacity:0.8;margin-right:16px;">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
-                        <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
-                        <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
-                    </svg>
-                    +91 7770943943
-                </a>
                 <button class="nav-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'});">Submit Report</button>
             </div>
             <button id="hamburger-menu">
@@ -874,20 +889,29 @@
     <footer class="footer">
         <div>© 2025 No Lie in July - All rights reserved | <a href="#">Cookies</a> | <a href="#">Privacy policy</a></div>
         <div style="margin-top:8px;font-size:0.9em;opacity:0.7;">Website inspired by <a href="https://brewdistrict24.com/en" target="_blank">BrewDistrict24</a></div>
-        <div style="margin-top:16px;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;">
-            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9em;">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="opacity:0.8;">
+        <div style="margin-top:16px;display:flex;justify-content:center;gap:2rem;flex-wrap:wrap;align-items:center;">
+            <a href="https://www.instagram.com/rj.krishii?igsh=b2gxbjBoNzFrZ2x3" target="_blank" rel="noopener" aria-label="Instagram" style="display:flex;align-items:center;">
+                <svg width="32" height="32" viewBox="0 0 448 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="448" height="512" rx="120" fill="url(#ig-gradient)"/>
+                    <defs>
+                        <linearGradient id="ig-gradient" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#f58529"/>
+                            <stop offset="50%" stop-color="#dd2a7b"/>
+                            <stop offset="100%" stop-color="#515bd4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M224,144c-44.2,0-80,35.8-80,80s35.8,80,80,80s80-35.8,80-80S268.2,144,224,144z M224,272c-26.5,0-48-21.5-48-48s21.5-48,48-48s48,21.5,48,48S250.5,272,224,272z" fill="#fff"/>
+                    <circle cx="336" cy="144" r="16" fill="#fff"/>
+                    <rect x="80" y="80" width="288" height="288" rx="80" stroke="#fff" stroke-width="32" fill="none"/>
+                </svg>
+            </a>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:1.1em;">
+                <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor" style="opacity:0.8;">
                     <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
                     <path d="M8 14A6 6 0 1 1 8 2a6 6 0 0 1 0 12z"/>
                     <path d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10z"/>
                 </svg>
                 <a href="tel:7770943943" style="color:var(--accent);text-decoration:none;">+91 7770943943</a>
-            </div>
-            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.9em;">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="opacity:0.8;">
-                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2 2v7h12V6H2zm12-1V4a1 1 0 0 0-1-1H1a1 1 0 0 0-1 1v2z"/>
-                </svg>
-                <a href="mailto:support@nolieinjuly.com" style="color:var(--accent);text-decoration:none;">support@nolieinjuly.com</a>
             </div>
         </div>
     </footer>
