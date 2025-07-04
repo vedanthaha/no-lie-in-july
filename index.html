@@ -569,9 +569,9 @@
             .hero-title { 
                 font-size: 2.5rem;
                 line-height: 1.1;
-                letter-spacing: 0.04em; /* Reduced spacing */
-                word-break: normal; /* Prevent breaking words */
-                overflow-wrap: break-word; /* Wrap between words */
+                letter-spacing: 0.04em;
+                word-break: normal;
+                overflow-wrap: break-word;
             }
             .hero-img { 
                 width: 220px; 
@@ -592,33 +592,14 @@
             .myfm-car { width: 80px; height: 40px; }
             .myfm-text { font-size: 2rem; }
             .desktop-nav-links, .nav-right {
-                display: none;
+                display: none !important;
             }
             #hamburger-menu {
-                display: block;
+                display: block !important;
             }
             .nav-logo {
                 font-size: 1.8rem;
                 margin-right: 0;
-            }
-            .mobile-menu-content .nav-social {
-                flex-direction: column;
-                gap: 18px;
-            }
-            .mobile-menu-content .nav-social a:not([aria-label="Instagram"]) {
-                display: none !important;
-            }
-            .mobile-menu-content .nav-social {
-                margin-top: 24px;
-            }
-            .mobile-menu-content .nav-contact {
-                display: flex !important;
-                align-items: center;
-                gap: 0.5rem;
-                font-size: 1.1em;
-                color: var(--accent);
-                text-decoration: none;
-                margin-top: 8px;
             }
         }
 
